@@ -23,8 +23,8 @@ from rich.progress import track
 
 ### Local modules ###
 from arise.configs import BUILDS, CLUSTERS, NETWORK
-from arise.types import Build, MutexOption, NewAddress, Service, ServiceName
-from arise.views import Yggdrasil
+from arise.shadows import Igris
+from arise.types import Build, MutexOption, Service, ServiceName
 
 
 @command
@@ -108,31 +108,31 @@ def deploy(
   build_count: int = len(builds.keys())
   if build_count != 0:
     builds_items = builds.items()
-    with Yggdrasil(row_count=10) as yggdrasil:
-      task_id: int = yggdrasil.add_task("", progress_type="primary", total=build_count)
+    with Igris(row_count=10) as igris:
+      task_id: int = igris.add_task("", progress_type="primary", total=build_count)
       for tag, build in builds_items:
-        build_task_id: int = yggdrasil.add_task(tag, progress_type="build", total=100)
+        build_task_id: int = igris.add_task(tag, progress_type="build", total=100)
         with BytesIO("\n".join(build.instructions).encode("utf-8")) as fileobj:
           try:
-            yggdrasil.progress_build(  # type: ignore[misc]
+            igris.progress_build(  # type: ignore[misc]
               client.api.build(
                 decode=True, fileobj=fileobj, platform=build.platform, rm=True, tag=tag
               ),
               build_task_id,
             )
           except BuildError:
-            yggdrasil.update(
+            igris.update(
               build_task_id,
               completed=0,
               description=f"[red bold]Build unsuccessful for <Image '{tag}'>.",
             )
-          yggdrasil.update(
+          igris.update(
             build_task_id,
             completed=100,
             description=f"[blue]Built <[bright_magenta]Image [green]'{tag}'[reset]> successfully.",
           )
-          yggdrasil.update(task_id, advance=1)
-      yggdrasil.update(task_id, completed=build_count, description="[blue]Complete")
+          igris.update(task_id, advance=1)
+      igris.update(task_id, completed=build_count, description="[blue]Complete")
 
   ### Deploy shared volume peripherals ###
   run_errors: List[str] = []

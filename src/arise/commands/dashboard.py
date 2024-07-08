@@ -22,7 +22,7 @@ from docker.models.containers import Container
 from rich import print as rich_print
 
 ### Local modules ###
-from arise.views import Bifrost
+from arise.shadows import Bellion
 
 
 @command
@@ -53,7 +53,7 @@ def dashboard() -> None:
     filter(lambda container: match(r"arise-*", container.name), reversed(client.containers.list()))
   )
   container_names: List[str] = list(map(lambda container: container.name, arise_containers))
-  bifrost: Bifrost = Bifrost(
+  bifrost: Bellion = Bellion(
     bitcoind=bitcoind,
     containers=arise_containers,
     container_index=0,

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.8
 # coding:utf-8
 # Copyright (C) 2024 All rights reserved.
-# FILENAME:    ~~/src/arise/views/bifrost.py
+# FILENAME:    ~~/src/arise/shadows/bellion.py
 # VERSION:     0.1.0
 # CREATED:     2024-07-07 16:11
 # AUTHOR:      Sitt Guruvanich <aekasitt.g+github@siamintech.co.th>
@@ -29,7 +29,7 @@ from rich.text import Text
 from arise.types import BlockchainInfo, MempoolInfo
 
 
-class Bifrost(BaseModel):
+class Bellion(BaseModel):
   model_config: ConfigDict = ConfigDict(arbitrary_types_allowed=True)  # type: ignore[misc]
   bitcoind: Container
   container_index: StrictInt = 0
@@ -38,10 +38,10 @@ class Bifrost(BaseModel):
 
   ### Split layouts ###
   body: ClassVar[Layout] = Layout(name="body", minimum_size=4, ratio=8, size=17)
+  domains: ClassVar[Layout] = Layout(name="domains", size=20)
   footer: ClassVar[Layout] = Layout(name="footer", size=3)
   main: ClassVar[Layout] = Layout(size=72)
   pane: ClassVar[Layout] = Layout()
-  realms: ClassVar[Layout] = Layout(name="realms", size=20)
   sidebar: ClassVar[Layout] = Layout(size=24)
 
   ### Terminal ###
@@ -50,7 +50,7 @@ class Bifrost(BaseModel):
   def model_post_init(self, _) -> None:  # type: ignore[no-untyped-def]
     self.pane.split_row(self.sidebar, self.main)
     self.main.split_column(self.body, self.footer)
-    self.sidebar.split_column(self.realms)
+    self.sidebar.split_column(self.domains)
 
   def display(self) -> None:
     with self.terminal.cbreak(), self.terminal.hidden_cursor(), Live(
@@ -78,7 +78,7 @@ class Bifrost(BaseModel):
             container_rows = f"[reverse]{self.container_names[self.container_index]}[reset]\n"
           if self.container_index < len(self.container_names) - 1:
             container_rows += "\n".join(self.container_names[self.container_index + 1 :])
-          self.pane["realms"].update(Panel(container_rows, title="realms"))
+          self.pane["domains"].update(Panel(container_rows, title="domains"))
 
           container_name: str = self.container_names[self.container_index]
           body_table: Table = Table(expand=True, show_lines=True)
@@ -147,7 +147,7 @@ class Bifrost(BaseModel):
             )
           )
       except StopIteration:
-        print("Valhalla!")
+        print("Glory to Ashborn!")
 
 
-__all__ = ("Bifrost",)
+__all__ = ("Bellion",)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.8
 # coding:utf-8
 # Copyright (C) 2024 All rights reserved.
-# FILENAME:    ~~/src/arise/views/yggdrasil.py
+# FILENAME:    ~~/src/arise/shadows/igris.py
 # VERSION:     0.1.0
 # CREATED:     2024-07-07 16:11
 # AUTHOR:      Sitt Guruvanich <aekasitt.g+github@siamintech.co.th>
@@ -23,7 +23,7 @@ from rich.progress import BarColumn, Progress, Task
 from rich.table import Table
 
 
-class Yggdrasil(Progress):
+class Igris(Progress):
   primary_task: Task
   rows: Deque[str]
   table: Table = Table(box=MINIMAL, show_lines=False, show_header=False)
@@ -70,4 +70,4 @@ class Yggdrasil(Progress):
     self.table = table
 
 
-__all__ = ("Yggdrasil",)
+__all__ = ("Igris",)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.8
 # coding:utf-8
 # Copyright (C) 2024 All rights reserved.
-# FILENAME:    ~~/src/arise/views/__init__.py
+# FILENAME:    ~~/src/arise/shadows/__init__.py
 # VERSION:     0.1.0
 # CREATED:     2024-07-07 16:11
 # AUTHOR:      Sitt Guruvanich <aekasitt.g+github@siamintech.co.th>
@@ -11,7 +11,7 @@
 # *************************************************************
 
 ### Local modules ###
-from arise.views.bifrost import Bifrost
-from arise.views.yggdrasil import Yggdrasil
+from arise.shadows.bellion import Bellion
+from arise.shadows.igris import Igris
 
-__all__ = ("Bifrost", "Yggdrasil")
+__all__ = ("Bellion", "Igris")
