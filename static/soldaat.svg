@@ -15,7 +15,6 @@
       }
       text {
         fill: #524637;
-        letter-spacing: 40px;
         font-family: 'Patavi';
         font-size: 480px;
       }
