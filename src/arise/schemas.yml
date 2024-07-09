@@ -1,9 +1,23 @@
 builds:
   arise-bitcoind:
     instructions:
-      - ""
-      - ""
-      - ""
+      - FROM debian:stable-slim AS builder
+      - RUN apt-get update
+      - RUN apt-get install -y autoconf bsdmainutils build-essential git libboost-all-dev libtool pkg-config
+      - WORKDIR /usr
+      - RUN git clone --depth 1 --branch v27.1 https://github.com/bitcoin/bitcoin.git
+      - RUN cd bitcoin && ./autogen.sh && ./configure && make -j4
+      - FROM debian:stable-slim AS runner
+      - WORKDIR /usr/app
+      - RUN apt-get update
+      - RUN apt-get install -y libevent-dev
+      - COPY --from=builder /usr/bitcoin/src/bitcoind /usr/app/bitcoind
+      - COPY --from=builder /usr/bitcoin/src/bitcoin-cli /usr/app/bitcoin-cli
+      - ENV PATH=$PATH:/usr/app
+      - RUN mkdir -p /home/bitcoin/.bitcoin
+      - VOLUME ["/home/bitcoin/.bitcoin"]
+      - EXPOSE 18443 18444 28334 28335
+      - ENTRYPOINT ["/usr/app/bitcoind"]
 network: arise
 services:
   arise-bitcoind:
