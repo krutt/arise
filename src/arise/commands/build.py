@@ -27,14 +27,8 @@ from arise.types import Build
 
 
 @command
-@option("--bitcoind-cat", is_flag=True, help="Build bitcoind-cat optional image", type=bool)
-@option("--cashu-mint", is_flag=True, help="Build cashu-mint optional image", type=bool)
-@option("--lnd-krub", is_flag=True, help="Build lnd-krub optional image", type=bool)
-@option("--ord-server", is_flag=True, help="Build ord-server optional image", type=bool)
-@option("--tesla-ball", is_flag=True, help="Build tesla-ball optional image", type=bool)
-def build(
-  bitcoind_cat: bool, cashu_mint: bool, lnd_krub: bool, ord_server: bool, tesla_ball: bool
-) -> None:
+@option("--bitcoind", is_flag=True, help="Build arise-bitcoind image", type=bool)
+def build(bitcoind: bool) -> None:
   """Build peripheral images for the desired cluster."""
   client: DockerClient
   try:
@@ -52,14 +46,9 @@ def build(
       filter(lambda image: len(image.tags) != 0, client.images.list()),
     )
   )
-  build_select: Dict[str, bool] = {
-    "bitcoind-cat": bitcoind_cat,
-    "cashu-mint": cashu_mint,
-    "lnd-krub": lnd_krub,
-    "ord-server": ord_server,
-    "tesla-ball": tesla_ball,
-  }
+  build_select: Dict[str, bool] = {"arise-bitcoind": bitcoind}
 
+  ### Checks if specified images had been built previously ###
   outputs: List[str] = []
   built: Set[str] = {tag for tag in BUILDS.keys() if build_select[tag] and tag in image_names}
   outputs += map(lambda tag: f"<Image: '{tag}'> already exists in local docker images.", built)

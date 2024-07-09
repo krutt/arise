@@ -22,7 +22,7 @@ from rich import print as rich_print
 from rich.progress import track
 
 ### Local modules ###
-from arise.configs import BUILDS, CLUSTERS, NETWORK
+from arise.configs import BUILDS, NETWORK, SERVICES
 from arise.shadows import Igris
 from arise.types import Build, MutexOption, Service, ServiceName
 
@@ -65,7 +65,7 @@ def deploy(
     cluster_name = next(filter(lambda value: value[1], selector.items()))[0]
   except StopIteration:
     pass
-  cluster: Dict[ServiceName, Service] = CLUSTERS[cluster_name]
+  cluster: Dict[ServiceName, Service] = SERVICES[cluster_name]
 
   ### Attempts to create network if not exist ###
   try:

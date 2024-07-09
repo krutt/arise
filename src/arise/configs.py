@@ -22,15 +22,15 @@ from yaml import Loader, load
 from arise.types import Build, BuildEnum, Service, ServiceName
 
 BUILDS: Dict[BuildEnum, Build]
-CLUSTERS: Dict[ServiceName, Service]
 NETWORK: str
+SERVICES: Dict[ServiceName, Service]
 
 file_path: Path = Path(__file__).resolve()
 with open(str(file_path).replace("configs.py", "schemas.yml"), "rb") as stream:
   schema: Optional[Dict[str, Any]] = load(stream, Loader=Loader)
   if schema:
     BUILDS = TypeAdapter(Dict[BuildEnum, Build]).validate_python(schema["builds"])
-    CLUSTERS = TypeAdapter(Dict[ServiceName, Service]).validate_python(schema["clusters"])
     NETWORK = schema.get("network", "arise")
+    SERVICES = TypeAdapter(Dict[ServiceName, Service]).validate_python(schema["services"])
 
 __all__ = ("BUILDS", "CLUSTERS", "NETWORK")
