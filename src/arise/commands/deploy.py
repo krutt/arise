@@ -19,6 +19,7 @@ from click import command, option
 from docker import DockerClient, from_env
 from docker.errors import APIError, DockerException
 from rich import print as rich_print
+from rich.progress import track
 
 ### Local modules ###
 from arise.configs import NETWORK, SERVICES
@@ -57,15 +58,16 @@ def deploy(bitcoind: bool) -> None:
     pass
 
   ### Deploy specified cluster ###
-  client.containers.run(
-    service.image,
-    command=service.command,
-    detach=True,
-    environment=service.env_vars,
-    name=service_name,
-    network=NETWORK,
-    ports=ports,
-  )
+  for svc in track((service,), f"Deploying { service_name }..."):
+    client.containers.run(
+      service.image,
+      command=service.command,
+      detach=True,
+      environment=service.env_vars,
+      name=service_name,
+      network=NETWORK,
+      ports=ports,
+    )
 
   ### Build missing image if any ###
   # builds: Dict[str, Build] = {
