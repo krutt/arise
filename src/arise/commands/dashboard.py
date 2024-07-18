@@ -42,11 +42,8 @@ def dashboard() -> None:
   try:
     bitcoind = client.containers.get("arise-bitcoind")
   except NotFound:
-    try:
-      bitcoind = client.containers.get("arise-bitcoind-cat")
-    except NotFound:
-      rich_print('[red bold]Unable to find "arise-bitcoind" container.')
-      return
+    rich_print('[red bold]Unable to find "arise-bitcoind" container.')
+    return
 
   ### Retrieve other containers ###
   arise_containers: List[Container] = list(
