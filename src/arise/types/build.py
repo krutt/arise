@@ -11,17 +11,19 @@
 # *************************************************************
 
 ### Standard packages ###
-from typing import List, Literal
+from typing import Dict, Literal
 
 from pydantic import BaseModel, StrictStr
 
 
 class Build(BaseModel):
-  instructions: List[StrictStr]
+  instructions: Dict[int, StrictStr]
   platform: StrictStr = "linux/amd64"
 
 
-BuildEnum = Literal["arise-bitcoind", "arise-mainnet", "arise-signet", "arise-testnet", "arise-testnet4"]
+BuildEnum = Literal[
+  "arise-bitcoind", "arise-mainnet", "arise-signet", "arise-testnet", "arise-testnet4"
+]
 
 
 __all__ = ("Build", "BuildEnum")

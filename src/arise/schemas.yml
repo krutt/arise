@@ -1,103 +1,103 @@
 builds:
   arise-bitcoind:
     instructions: &baseInstructions
-      - FROM debian:stable-slim AS builder
-      - RUN apt-get update
-      - RUN apt-get install -y autoconf bsdmainutils build-essential git libboost-all-dev libtool pkg-config
-      - WORKDIR /usr
-      - RUN git clone --depth 1 --branch v27.1 https://github.com/bitcoin/bitcoin.git
-      - RUN cd bitcoin && ./autogen.sh && ./configure && make -j4
-      - FROM debian:stable-slim AS runner
-      - WORKDIR /usr/app
-      - RUN apt-get update
-      - RUN apt-get install -y libevent-dev
-      - COPY --from=builder /usr/bitcoin/src/bitcoind /usr/app/bitcoind
-      - COPY --from=builder /usr/bitcoin/src/bitcoin-cli /usr/app/bitcoin-cli
-      - ENV PATH=$PATH:/usr/app
-      - RUN mkdir -p /home/bitcoin/.bitcoin
-      - VOLUME ["/home/bitcoin/.bitcoin"]
+      0: FROM debian:stable-slim AS builder
+      1: RUN apt-get update
+      2: RUN apt-get install -y autoconf bsdmainutils build-essential git libboost-all-dev libtool pkg-config
+      3: WORKDIR /usr
+      4: RUN git clone --depth 1 --branch v27.1 https://github.com/bitcoin/bitcoin.git
+      5: RUN cd bitcoin && ./autogen.sh && ./configure && make -j4
+      6: FROM debian:stable-slim AS runner
+      7: WORKDIR /usr/app
+      8: RUN apt-get update
+      9: RUN apt-get install -y libevent-dev
+      10: COPY --from=builder /usr/bitcoin/src/bitcoind /usr/app/bitcoind
+      11: COPY --from=builder /usr/bitcoin/src/bitcoin-cli /usr/app/bitcoin-cli
+      12: ENV PATH=$PATH:/usr/app
+      13: RUN mkdir -p /home/bitcoin/.bitcoin
+      14: VOLUME ["/home/bitcoin/.bitcoin"]
   arise-mainnet:
     instructions:
-      - << *baseInstructions
-      - EXPOSE 8332 8333
-      - ENTRYPOINT ["/usr/app/bitcoind"]
+      <<: *baseInstructions
+      15: EXPOSE 8332 8333
+      16: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-signet:
     instructions:
-      - << *baseInstructions
-      - EXPOSE 38332 38333
-      - ENTRYPOINT ["/usr/app/bitcoind"]
+      <<: *baseInstructions
+      15: EXPOSE 38332 38333
+      16: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-testnet:
     instructions:
-      - << *baseInstructions
-      - EXPOSE 18332 18333
-      - ENTRYPOINT ["/usr/app/bitcoind"]
+      <<: *baseInstructions
+      15: EXPOSE 18332 18333
+      16: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-testnet4:
     instructions:
-      - << *baseInstructions
-      - EXPOSE 48332 48333
-      - ENTRYPOINT ["/usr/app/bitcoind"]
+      <<: *baseInstructions
+      15: EXPOSE 48332 48333
+      16: ENTRYPOINT ["/usr/app/bitcoind"]
 network: arise
 services:
   arise-bitcoind:
     command: &baseCommand
-      - -daemon=1
-      - -datadir=/home/bitcoin/.bitcoin
-      - -dnsseed=0
-      - -listen=1
-      - -listenonion=1
-      - -server=1
-      - -txindex=1
-      - -blockfilterindex=1
-      - -rest=1
-      - -rpcallowip=127.0.0.1
-      - -rpcallowip=10.0.0.0/8
-      - -rpcallowip=192.168.0.0/16
-      - -rpcallowip=172.0.0.0/8
-      - -rpcbind=0.0.0.0
-      - -rpcservertimeout=120
-      - -rpcpassword=${ARISE_RPCPASS}
-      - -rpcuser=${ARISE_RPCUSER}
-      - -rpcworkqueue=128
-      - -upnp=0
-      - -whitelist=127.0.0.1
+      0: -daemon=1
+      1: -datadir=/home/bitcoin/.bitcoin
+      2: -dnsseed=0
+      3: -listen=1
+      4: -listenonion=1
+      5: -server=1
+      6: -txindex=1
+      7: -blockfilterindex=1
+      8: -rest=1
+      9: -rpcallowip=127.0.0.1
+      10: -rpcallowip=10.0.0.0/8
+      11: -rpcallowip=192.168.0.0/16
+      12: -rpcallowip=172.0.0.0/8
+      13: -rpcbind=0.0.0.0
+      14: -rpcservertimeout=120
+      15: -rpcpassword=${ARISE_RPCPASS}
+      16: -rpcuser=${ARISE_RPCUSER}
+      17: -rpcworkqueue=128
+      18: -upnp=0
+      19: -whitelist=127.0.0.1
     image: arise-bitcoind
     ports:
       - 0:0
   arise-mainnet:
     command:
-      - << *baseCommand
-      - -port=8333
-      - -rpcport=8332
+      <<: *baseCommand
+      20: -port=8333
+      21: -rpcport=8332
     image: arise-mainnet
     ports:
       - 8332:8332
       - 8333:8333
   arise-signet:
     command:
-      - << *baseCommand
-      - -port=38333
-      - -rpcport=38332
-      - -signet
+      <<: *baseCommand
+      20: -port=38333
+      21: -rpcport=38332
+      22: -signet
     image: arise-signet
     ports:
       - 38332:38332
       - 38333:38333
   arise-testnet:
     command:
-      - << *baseCommand
-      - -port=18333
-      - -rpcport=18332
-      - -testnet
+      <<: *baseCommand
+      20: -port=18333
+      21: -rpcport=18332
+      22: -testnet
     image: arise-testnet
     ports:
       - 18332:18332
       - 18333:18333
   arise-testnet4:
     command:
-      - << *baseCommand
-      - -port=48333
-      - -rpcport=48332
-      - -testnet4
+      <<: *baseCommand
+      20: -port=48333
+      21: -rpcport=48332
+      22: -testnet4
     image: arise-testnet4
     ports:
       - 48332:48332

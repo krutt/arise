@@ -27,8 +27,11 @@ from arise.types import Build
 
 
 @command
-@option("--bitcoind", is_flag=True, help="Build arise-bitcoind image", type=bool)
-def build(bitcoind: bool) -> None:
+@option("--mainnet", is_flag=True, help="Build arise-mainnet image", type=bool)
+@option("--signet", is_flag=True, help="Build arise-signet image", type=bool)
+@option("--testnet", is_flag=True, help="Build arise-testnet image", type=bool)
+@option("--testnet4", is_flag=True, help="Build arise-testnet4 image", type=bool)
+def build(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
   """Build peripheral images for the desired cluster."""
   client: DockerClient
   try:
@@ -39,14 +42,19 @@ def build(bitcoind: bool) -> None:
     rich_print("[red bold]Unable to connect to docker daemon.")
     return
 
-  ### Build optional images ###
   image_names: List[str] = list(
     map(
       lambda image: image.tags[0].split(":")[0],
       filter(lambda image: len(image.tags) != 0, client.images.list()),
     )
   )
-  build_select: Dict[str, bool] = {"arise-bitcoind": bitcoind}
+  build_select: Dict[str, bool] = {
+    "arise-bitcoind": False,  # exclude base-image
+    "arise-mainnet": mainnet,
+    "arise-signet": signet,
+    "arise-testnet": testnet,
+    "arise-testnet4": testnet4,
+  }
 
   ### Checks if specified images had been built previously ###
   outputs: List[str] = []
@@ -64,7 +72,7 @@ def build(bitcoind: bool) -> None:
       task_id: int = igris.add_task("", progress_type="primary", total=build_count)
       for tag, build in builds_items:
         build_task_id: int = igris.add_task(tag, progress_type="build", total=100)
-        with BytesIO("\n".join(build.instructions).encode("utf-8")) as fileobj:
+        with BytesIO("\n".join(build.instructions.values()).encode("utf-8")) as fileobj:
           try:
             igris.progress_build(  # type: ignore[misc]
               client.api.build(

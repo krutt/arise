@@ -58,10 +58,10 @@ def deploy(bitcoind: bool) -> None:
     pass
 
   ### Deploy specified cluster ###
-  for svc in track((service,), f"Deploying { service_name }..."):
+  for service in track((service,), f"Deploying { service_name }..."):
     client.containers.run(
       service.image,
-      command=service.command,
+      command=service.command.values(),
       detach=True,
       environment=service.env_vars,
       name=service_name,

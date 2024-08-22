@@ -25,6 +25,7 @@ BUILDS: Dict[BuildEnum, Build]
 NETWORK: str
 SERVICES: Dict[ServiceName, Service]
 
+
 file_path: Path = Path(__file__).resolve()
 with open(str(file_path).replace("configs.py", "schemas.yml"), "rb") as stream:
   schema: Optional[Dict[str, Any]] = load(stream, Loader=Loader)
@@ -33,4 +34,4 @@ with open(str(file_path).replace("configs.py", "schemas.yml"), "rb") as stream:
     NETWORK = schema.get("network", "arise")
     SERVICES = TypeAdapter(Dict[ServiceName, Service]).validate_python(schema["services"])
 
-__all__ = ("BUILDS", "CLUSTERS", "NETWORK")
+__all__ = ("BUILDS", "NETWORK", "SERVICES")

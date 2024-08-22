@@ -11,19 +11,21 @@
 # *************************************************************
 
 ### Standard packages ###
-from typing import List, Literal
+from typing import Dict, List, Literal
 
 ### Third-party packages ###
 from pydantic import BaseModel, StrictStr
 
 
 class Service(BaseModel):
-  command: List[StrictStr] = []
+  command: Dict[int, StrictStr] = {}
   env_vars: List[StrictStr] = []
   image: StrictStr
   ports: List[StrictStr]
 
 
-ServiceName = Literal["arise-bitcoind", "arise-mainnet", "arise-signet", "arise-testnet", "arise-testnet4"]
+ServiceName = Literal[
+  "arise-bitcoind", "arise-mainnet", "arise-signet", "arise-testnet", "arise-testnet4"
+]
 
 __all__ = ("Service", "ServiceName")
