@@ -74,8 +74,6 @@ def build(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
         build_task_id: int = igris.add_task(tag, progress_type="build", total=100)
         with BytesIO("\n".join(build.instructions.values()).encode("utf-8")) as fileobj:
           try:
-            print(tag)
-            print(build.platform)
             igris.progress_build(  # type: ignore[misc]
               client.api.build(
                 decode=True, fileobj=fileobj, platform=build.platform, rm=True, tag=tag
