@@ -12,7 +12,7 @@
 
 ### Standard packages ###
 # from io import BytesIO
-from typing import Dict
+from typing import Dict, List
 
 ### Third-party packages ###
 from click import command, option
@@ -27,8 +27,11 @@ from arise.types import Service, ServiceName
 
 
 @command
-@option("--bitcoind", is_flag=True, type=bool)
-def deploy(bitcoind: bool) -> None:
+@option("--mainnet", is_flag=True, type=bool)
+@option("--signet", is_flag=True, type=bool)
+@option("--testnet", is_flag=True, type=bool)
+@option("--testnet4", is_flag=True, type=bool)
+def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
   """Deploy cluster."""
   client: DockerClient
   try:
@@ -39,9 +42,14 @@ def deploy(bitcoind: bool) -> None:
     rich_print("[red bold]Unable to connect to docker daemon.")
     return
 
-  ### Defaults to duo network; Derive cluster information from parameters ###
-  selector: Dict[ServiceName, bool] = {"arise-bitcoind": bitcoind}
-  service_name: ServiceName = "arise-bitcoind"
+  selector: Dict[ServiceName, bool] = {
+    "arise-bitcoind": False,  # exclude base-image
+    "arise-mainnet": mainnet,
+    "arise-signet": signet,
+    "arise-testnet": testnet,
+    "arise-testnet4": testnet4,
+  }
+  service_name: ServiceName = "arise-mainnet"
   try:
     service_name = next(filter(lambda value: value[1], selector.items()))[0]
   except StopIteration:
@@ -50,6 +58,7 @@ def deploy(bitcoind: bool) -> None:
   ports: Dict[str, str] = dict(
     map(lambda item: (item[0], item[1]), [port.split(":") for port in service.ports])
   )
+  command: List[str] = list(service.command.values())
 
   ### Attempts to create network if not exist ###
   try:
@@ -58,16 +67,15 @@ def deploy(bitcoind: bool) -> None:
     pass
 
   ### Deploy specified cluster ###
-  for service in track((service,), f"Deploying { service_name }..."):
-    client.containers.run(
-      service.image,
-      command=service.command.values(),
-      detach=True,
-      environment=service.env_vars,
-      name=service_name,
-      network=NETWORK,
-      ports=ports,
-    )
+  client.containers.run(
+    service.image,
+    command=command,
+    detach=True,
+    environment=service.env_vars,
+    name=service_name,
+    network=NETWORK,
+    ports=ports,
+  )
 
   ### Build missing image if any ###
   # builds: Dict[str, Build] = {
