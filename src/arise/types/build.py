@@ -21,7 +21,7 @@ class Build(BaseModel):
   platform: StrictStr = "linux/amd64"
 
 
-BuildEnum = Literal["arise-bitcoind"]
+BuildEnum = Literal["arise-bitcoind", "arise-mainnet", "arise-signet", "arise-testnet", "arise-testnet4"]
 
 
 __all__ = ("Build", "BuildEnum")

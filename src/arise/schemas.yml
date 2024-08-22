@@ -1,6 +1,6 @@
 builds:
   arise-bitcoind:
-    instructions:
+    instructions: &baseInstructions
       - FROM debian:stable-slim AS builder
       - RUN apt-get update
       - RUN apt-get install -y autoconf bsdmainutils build-essential git libboost-all-dev libtool pkg-config
@@ -16,13 +16,30 @@ builds:
       - ENV PATH=$PATH:/usr/app
       - RUN mkdir -p /home/bitcoin/.bitcoin
       - VOLUME ["/home/bitcoin/.bitcoin"]
-      - EXPOSE 8332 28332 28333
+  arise-mainnet:
+    instructions:
+      - << *baseInstructions
+      - EXPOSE 8332 8333
+      - ENTRYPOINT ["/usr/app/bitcoind"]
+  arise-signet:
+    instructions:
+      - << *baseInstructions
+      - EXPOSE 38332 38333
+      - ENTRYPOINT ["/usr/app/bitcoind"]
+  arise-testnet:
+    instructions:
+      - << *baseInstructions
+      - EXPOSE 18332 18333
+      - ENTRYPOINT ["/usr/app/bitcoind"]
+  arise-testnet4:
+    instructions:
+      - << *baseInstructions
+      - EXPOSE 48332 48333
       - ENTRYPOINT ["/usr/app/bitcoind"]
 network: arise
 services:
   arise-bitcoind:
-    command:
-      # - -rpcauth=arise:0a17eed40accdd0f2271a548547ec9bb$b269b686f2ad7ccf0b5ea3450e0687dc1a90846d3828811ad0d570de83b65f4c
+    command: &baseCommand
       - -daemon=1
       - -datadir=/home/bitcoin/.bitcoin
       - -dnsseed=0
@@ -37,17 +54,51 @@ services:
       - -rpcallowip=192.168.0.0/16
       - -rpcallowip=172.0.0.0/8
       - -rpcbind=0.0.0.0
-      - -rpcport=8332
       - -rpcservertimeout=120
-      - -rpcuser=arise
-      - -rpcpassword=arise
+      - -rpcpassword=${ARISE_RPCPASS}
+      - -rpcuser=${ARISE_RPCUSER}
       - -rpcworkqueue=128
       - -upnp=0
       - -whitelist=127.0.0.1
-      - -zmqpubrawblock=tcp://0.0.0.0:28332
-      - -zmqpubrawtx=tcp://0.0.0.0:28333
     image: arise-bitcoind
     ports:
+      - 0:0
+  arise-mainnet:
+    command:
+      - << *baseCommand
+      - -port=8333
+      - -rpcport=8332
+    image: arise-mainnet
+    ports:
       - 8332:8332
-      - 28332:28332
-      - 28333:28333
+      - 8333:8333
+  arise-signet:
+    command:
+      - << *baseCommand
+      - -port=38333
+      - -rpcport=38332
+      - -signet
+    image: arise-signet
+    ports:
+      - 38332:38332
+      - 38333:38333
+  arise-testnet:
+    command:
+      - << *baseCommand
+      - -port=18333
+      - -rpcport=18332
+      - -testnet
+    image: arise-testnet
+    ports:
+      - 18332:18332
+      - 18333:18333
+  arise-testnet4:
+    command:
+      - << *baseCommand
+      - -port=48333
+      - -rpcport=48332
+      - -testnet4
+    image: arise-testnet4
+    ports:
+      - 48332:48332
+      - 48333:48333

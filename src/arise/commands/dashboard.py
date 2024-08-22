@@ -50,13 +50,13 @@ def dashboard() -> None:
     filter(lambda container: match(r"arise-*", container.name), reversed(client.containers.list()))
   )
   container_names: List[str] = list(map(lambda container: container.name, arise_containers))
-  bifrost: Bellion = Bellion(
+  bellion: Bellion = Bellion(
     bitcoind=bitcoind,
     containers=arise_containers,
     container_index=0,
     container_names=container_names,
   )
-  bifrost.display()
+  bellion.display()
 
 
 __all__ = ("dashboard",)

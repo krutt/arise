@@ -24,6 +24,6 @@ class Service(BaseModel):
   ports: List[StrictStr]
 
 
-ServiceName = Literal["arise-bitcoind"]
+ServiceName = Literal["arise-bitcoind", "arise-mainnet", "arise-signet", "arise-testnet", "arise-testnet4"]
 
 __all__ = ("Service", "ServiceName")
