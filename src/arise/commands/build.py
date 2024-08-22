@@ -81,18 +81,10 @@ def build(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
               build_task_id,
             )
           except BuildError:
-            igris.update(
-              build_task_id,
-              completed=0,
-              description=f"[red bold]Build unsuccessful for <Image '{tag}'>.",
-            )
-          igris.update(
-            build_task_id,
-            completed=100,
-            description=f"[blue]Built <[bright_magenta]Image [green]'{tag}'[reset]> successfully.",
-          )
+            igris.update(build_task_id, completed=0)
+          igris.update(build_task_id, completed=100)
           igris.update(task_id, advance=1)
-      igris.update(task_id, completed=build_count, description="[blue]Complete")
+      igris.update(task_id, completed=build_count, description="[blue]Complete[reset]")
 
 
 __all__ = ("build",)
