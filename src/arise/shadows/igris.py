@@ -48,7 +48,9 @@ class Igris(Progress):
             BarColumn(),
           )
         else:
-          self.columns = (f"[blue]Built <[bright_magenta]Image [green]'{image_name}'[reset]>[blue] successfully.[reset]")
+          self.columns = (
+            f"[blue]Built <[bright_magenta]Image [green]'{image_name}'[reset]>[blue] successfully.[reset]",
+          )
       elif task.fields.get("progress_type") == "primary":
         self.columns = ("Build specified images:".ljust(42), BarColumn())
       yield self.make_tasks_table([task])
