@@ -12,20 +12,23 @@
 
 ### Standard packages ###
 from typing import Dict, List, Literal
+from typing_extensions import Annotated
 
 ### Third-party packages ###
-from pydantic import BaseModel, StrictStr
+from pydantic import BaseModel, Field, StrictStr
+
+PortMapping = Annotated[StrictStr, Field(pattern=r"^\d{1,5}:\d{1,5}$")]
 
 
 class Service(BaseModel):
   command: Dict[int, StrictStr] = {}
   env_vars: List[StrictStr] = []
   image: StrictStr
-  ports: List[StrictStr]
+  ports: List[PortMapping]
 
 
 ServiceName = Literal[
   "arise-bitcoind", "arise-mainnet", "arise-signet", "arise-testnet", "arise-testnet4"
 ]
 
-__all__ = ("Service", "ServiceName")
+__all__ = ("PortMapping", "Service", "ServiceName")
