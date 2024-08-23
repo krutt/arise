@@ -42,33 +42,32 @@ services:
   arise-bitcoind:
     command: &baseCommand
       0: -blockfilterindex=1
-      1: -daemon=1
-      2: -datadir=/home/bitcoin/.bitcoin
-      3: -dnsseed=0
-      4: -listen=1
-      5: -listenonion=1
-      6: -rest=1
-      7: -rpcallowip=127.0.0.1
-      8: -rpcallowip=10.0.0.0/8
-      9: -rpcallowip=192.168.0.0/16
-      10: -rpcallowip=172.0.0.0/8
-      11: -rpcbind=0.0.0.0
-      12: -rpcservertimeout=120
-      13: -rpcpassword=arise
-      14: -rpcuser=arise
-      15: -rpcworkqueue=128
-      16: -server=1
-      17: -txindex=1
-      18: -upnp=0
-      19: -whitelist=127.0.0.1
+      1: -datadir=/home/bitcoin/.bitcoin
+      2: -dnsseed=0
+      3: -listen=1
+      4: -listenonion=1
+      5: -rest=1
+      6: -rpcallowip=127.0.0.1
+      7: -rpcallowip=10.0.0.0/8
+      8: -rpcallowip=192.168.0.0/16
+      9: -rpcallowip=172.0.0.0/8
+      10: -rpcbind=0.0.0.0
+      11: -rpcservertimeout=120
+      12: -rpcpassword=arise
+      13: -rpcuser=arise
+      14: -rpcworkqueue=128
+      15: -server=1
+      16: -txindex=1
+      17: -upnp=0
+      18: -whitelist=127.0.0.1
     image: arise-bitcoind
     ports:
       - 0:0
   arise-mainnet:
     command:
       <<: *baseCommand
-      20: -port=8333
-      21: -rpcport=8332
+      19: -port=8333
+      20: -rpcport=8332
     image: arise-mainnet
     ports:
       - 8332:8332
@@ -76,9 +75,9 @@ services:
   arise-signet:
     command:
       <<: *baseCommand
-      20: -port=38333
-      21: -rpcport=38332
-      22: -signet
+      19: -port=38333
+      20: -rpcport=38332
+      21: -signet
     image: arise-signet
     ports:
       - 38332:38332
@@ -86,9 +85,9 @@ services:
   arise-testnet:
     command:
       <<: *baseCommand
-      20: -port=18333
-      21: -rpcport=18332
-      22: -testnet
+      19: -port=18333
+      20: -rpcport=18332
+      21: -testnet
     image: arise-testnet
     ports:
       - 18332:18332
@@ -96,9 +95,9 @@ services:
   arise-testnet4:
     command:
       <<: *baseCommand
-      20: -port=48333
-      21: -rpcport=48332
-      22: -testnet
+      19: -port=48333
+      20: -rpcport=48332
+      21: -testnet
     image: arise-testnet4
     ports:
       - 48332:48332
