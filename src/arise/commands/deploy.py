@@ -63,11 +63,11 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
 
   ### Deploy specified service ###
   for _ in track(range(1), f"Deploy { service_name }".ljust(42)):
-    command: List[str] = list(service.command.values())
+    flags: List[str] = list(service.command.values())
     ports: Dict[str, int] = {port.split(":")[0]: int(port.split(":")[1]) for port in service.ports}
     client.containers.run(
       service.image,
-      command=command,
+      command=flags,
       detach=True,
       environment=service.env_vars,
       name=service_name,
