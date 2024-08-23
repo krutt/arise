@@ -98,7 +98,7 @@ services:
       <<: *baseCommand
       20: -port=48333
       21: -rpcport=48332
-      22: -testnet4
+      22: -testnet
     image: arise-testnet4
     ports:
       - 48332:48332

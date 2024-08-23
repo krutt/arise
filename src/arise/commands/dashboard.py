@@ -40,9 +40,9 @@ def dashboard() -> None:
   ### Retrieve bitcoind container ###
   bitcoind: Container
   try:
-    bitcoind = client.containers.get("arise-bitcoind")
+    bitcoind = client.containers.get("arise-testnet4")
   except NotFound:
-    rich_print('[red bold]Unable to find "arise-bitcoind" container.')
+    rich_print('[red bold]Unable to find "arise-testnet4" container.')
     return
 
   ### Retrieve other containers ###
@@ -50,6 +50,8 @@ def dashboard() -> None:
     filter(lambda container: match(r"arise-*", container.name), reversed(client.containers.list()))
   )
   container_names: List[str] = list(map(lambda container: container.name, arise_containers))
+  print(container_names)
+  return
   bellion: Bellion = Bellion(
     bitcoind=bitcoind,
     containers=arise_containers,
