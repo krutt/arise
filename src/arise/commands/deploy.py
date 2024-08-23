@@ -72,7 +72,7 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
     environment=service.env_vars,
     name=service_name,
     network=NETWORK,
-    ports=ports,
+    ports=ports,  # type: ignore
   )
 
   ### Build missing image if any ###
