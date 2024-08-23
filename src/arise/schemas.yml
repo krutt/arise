@@ -20,23 +20,23 @@ builds:
   arise-mainnet:
     instructions:
       <<: *baseInstructions
-      15: EXPOSE 8332 8333
-      16: ENTRYPOINT ["/usr/app/bitcoind"]
+      16: EXPOSE 8332 8333
+      17: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-signet:
     instructions:
       <<: *baseInstructions
-      15: EXPOSE 38332 38333
-      16: ENTRYPOINT ["/usr/app/bitcoind"]
+      16: EXPOSE 38332 38333
+      17: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-testnet:
     instructions:
       <<: *baseInstructions
-      15: EXPOSE 18332 18333
-      16: ENTRYPOINT ["/usr/app/bitcoind"]
+      16: EXPOSE 18332 18333
+      17: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-testnet4:
     instructions:
       <<: *baseInstructions
-      15: EXPOSE 48332 48333
-      16: ENTRYPOINT ["/usr/app/bitcoind"]
+      16: EXPOSE 48332 48333
+      17: ENTRYPOINT ["/usr/app/bitcoind"]
 network: arise
 services:
   arise-bitcoind:
