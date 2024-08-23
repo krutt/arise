@@ -64,7 +64,7 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
   except APIError:
     pass
 
-  ### Deploy specified cluster ###
+  ### Deploy specified service ###
   client.containers.run(
     service.image,
     command=command,
