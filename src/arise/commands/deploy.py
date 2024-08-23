@@ -75,38 +75,5 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
     ports=ports,  # type: ignore
   )
 
-  ### Build missing image if any ###
-  # builds: Dict[str, Build] = {
-  #   tag: build for tag, build in BUILDS.items() if selector[tag] and tag not in image_names
-  # }
-  # build_count: int = len(builds.keys())
-  # if build_count != 0:
-  #   builds_items = builds.items()
-  #   with Igris(row_count=10) as igris:
-  #     task_id: int = igris.add_task("", progress_type="primary", total=build_count)
-  #     for tag, build in builds_items:
-  #       build_task_id: int = igris.add_task(tag, progress_type="build", total=100)
-  #       with BytesIO("\n".join(build.instructions).encode("utf-8")) as fileobj:
-  #         try:
-  #           igris.progress_build(  # type: ignore[misc]
-  #             client.api.build(
-  #               decode=True, fileobj=fileobj, platform=build.platform, rm=True, tag=tag
-  #             ),
-  #             build_task_id,
-  #           )
-  #         except BuildError:
-  #           igris.update(
-  #             build_task_id,
-  #             completed=0,
-  #             description=f"[red bold]Build unsuccessful for <Image '{tag}'>.",
-  #           )
-  #         igris.update(
-  #           build_task_id,
-  #           completed=100,
-  #           description=f"[blue]Built <[bright_magenta]Image [green]'{tag}'[reset]> successfully.",
-  #         )
-  #         igris.update(task_id, advance=1)
-  #     igris.update(task_id, completed=build_count, description="[blue]Complete")
-
 
 __all__ = ("deploy",)
