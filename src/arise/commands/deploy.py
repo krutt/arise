@@ -11,7 +11,6 @@
 # *************************************************************
 
 ### Standard packages ###
-# from io import BytesIO
 from typing import Dict, List
 
 ### Third-party packages ###
@@ -19,7 +18,7 @@ from click import command, option
 from docker import DockerClient, from_env
 from docker.errors import APIError, DockerException
 from rich import print as rich_print
-# from rich.progress import track
+from rich.progress import track
 
 ### Local modules ###
 from arise.configs import NETWORK, SERVICES
@@ -55,8 +54,6 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
   except StopIteration:
     pass
   service: Service = SERVICES[service_name]
-  ports: Dict[str, int] = {port.split(":")[0]: int(port.split(":")[1]) for port in service.ports}
-  command: List[str] = list(service.command.values())
 
   ### Attempts to create network if not exist ###
   try:
@@ -65,15 +62,19 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
     pass
 
   ### Deploy specified service ###
-  client.containers.run(
-    service.image,
-    command=command,
-    detach=True,
-    environment=service.env_vars,
-    name=service_name,
-    network=NETWORK,
-    ports=ports,  # type: ignore
-  )
+  for _ in track(range(1), f"Deploy { service_name }".ljust(42)):
+    command: List[str] = list(service.command.values())
+    ports: Dict[str, int] = {port.split(":")[0]: int(port.split(":")[1]) for port in service.ports}
+    client.containers.run(
+      service.image,
+      command=command,
+      detach=True,
+      environment=service.env_vars,
+      name=service_name,
+      network=NETWORK,
+      ports=ports,  # type: ignore
+    )
+
 
 
 __all__ = ("deploy",)
