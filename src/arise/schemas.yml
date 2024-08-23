@@ -41,24 +41,24 @@ network: arise
 services:
   arise-bitcoind:
     command: &baseCommand
-      0: -daemon=1
-      1: -datadir=/home/bitcoin/.bitcoin
-      2: -dnsseed=0
-      3: -listen=1
-      4: -listenonion=1
-      5: -server=1
-      6: -txindex=1
-      7: -blockfilterindex=1
-      8: -rest=1
-      9: -rpcallowip=127.0.0.1
-      10: -rpcallowip=10.0.0.0/8
-      11: -rpcallowip=192.168.0.0/16
-      12: -rpcallowip=172.0.0.0/8
-      13: -rpcbind=0.0.0.0
-      14: -rpcservertimeout=120
-      15: -rpcpassword=arise
-      16: -rpcuser=arise
-      17: -rpcworkqueue=128
+      0: -blockfilterindex=1
+      1: -daemon=1
+      2: -datadir=/home/bitcoin/.bitcoin
+      3: -dnsseed=0
+      4: -listen=1
+      5: -listenonion=1
+      6: -rest=1
+      7: -rpcallowip=127.0.0.1
+      8: -rpcallowip=10.0.0.0/8
+      9: -rpcallowip=192.168.0.0/16
+      10: -rpcallowip=172.0.0.0/8
+      11: -rpcbind=0.0.0.0
+      12: -rpcservertimeout=120
+      13: -rpcpassword=arise
+      14: -rpcuser=arise
+      15: -rpcworkqueue=128
+      16: -server=1
+      17: -txindex=1
       18: -upnp=0
       19: -whitelist=127.0.0.1
     image: arise-bitcoind
