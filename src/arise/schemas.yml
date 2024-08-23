@@ -56,8 +56,8 @@ services:
       12: -rpcallowip=172.0.0.0/8
       13: -rpcbind=0.0.0.0
       14: -rpcservertimeout=120
-      15: -rpcpassword=${ARISE_RPCPASS}
-      16: -rpcuser=${ARISE_RPCUSER}
+      15: -rpcpassword=arise
+      16: -rpcuser=arise
       17: -rpcworkqueue=128
       18: -upnp=0
       19: -whitelist=127.0.0.1

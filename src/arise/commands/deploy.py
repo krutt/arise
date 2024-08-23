@@ -19,7 +19,7 @@ from click import command, option
 from docker import DockerClient, from_env
 from docker.errors import APIError, DockerException
 from rich import print as rich_print
-from rich.progress import track
+# from rich.progress import track
 
 ### Local modules ###
 from arise.configs import NETWORK, SERVICES
@@ -55,9 +55,7 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
   except StopIteration:
     pass
   service: Service = SERVICES[service_name]
-  ports: Dict[str, str] = dict(
-    map(lambda item: (item[0], item[1]), [port.split(":") for port in service.ports])
-  )
+  ports: Dict[str, int] = {port.split(":")[0]: int(port.split(":")[1]) for port in service.ports}
   command: List[str] = list(service.command.values())
 
   ### Attempts to create network if not exist ###

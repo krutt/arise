@@ -1,0 +1,24 @@
+/usr/app/bitcoind
+   -daemon=1
+   -datadir=/home/bitcoin/.bitcoin
+   -dnsseed=0
+   -listen=1
+   -listenonion=1
+   -server=1
+   -txindex=1
+   -blockfilterindex=1
+   -rest=1
+   -rpcallowip=127.0.0.1
+   -rpcallowip=10.0.0.0/8
+   -rpcallowip=192.168.0.0/16
+   -rpcallowip=172.0.0.0/8
+   -rpcbind=0.0.0.0
+   -rpcservertimeout=120
+   -rpcpassword=${ARISE_RPCPASS}
+   -rpcuser=${ARISE_RPCUSER}
+   -rpcworkqueue=128
+   -upnp=0
+   -whitelist=127.0.0.1
+   -port=48333
+   -rpcport=48332
+   -testnet
