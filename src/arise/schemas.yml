@@ -38,6 +38,7 @@ builds:
   arise-testnet4:
     instructions:
       <<: *baseInstructions
+      6: cd bitcoin && git fetch origin pull/29775/head:pr-29775 && git checkout pr-29775
       19: EXPOSE 48332 48333
       20: ENTRYPOINT ["/usr/app/bitcoind"]
 network: arise
