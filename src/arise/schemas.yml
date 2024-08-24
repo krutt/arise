@@ -5,38 +5,41 @@ builds:
       1: RUN apt-get update
       2: RUN apt-get install -y autoconf bsdmainutils build-essential ccache clang git libboost-all-dev libtool pkg-config
       3: WORKDIR /usr
-      4: RUN git clone --depth 1 --branch v27.1 https://github.com/bitcoin/bitcoin.git
-      5: RUN mkdir ~/.ccache && echo "max_size = 50.0G\nbase_dir = /usr/bitcoin\n" > ~/.ccache/ccache.conf
-      6: RUN cd bitcoin && ./autogen.sh && ./configure CC="clang" CXX="clang++" && make -j"$(($(nproc)+1))" src/bitcoind src/bitcoin-cli
-      7: FROM debian:stable-slim AS runner
-      8: WORKDIR /usr/app
-      9: RUN apt-get update
-      10: RUN apt-get install -y libevent-dev
-      11: COPY --from=builder /usr/bitcoin/src/bitcoind /usr/app/bitcoind
-      12: COPY --from=builder /usr/bitcoin/src/bitcoin-cli /usr/app/bitcoin-cli
-      13: ENV PATH=$PATH:/usr/app
-      14: RUN mkdir -p /home/bitcoin/.bitcoin
-      15: VOLUME ["/home/bitcoin/.bitcoin"]
+      4: RUN mkdir ~/.ccache && echo "max_size = 50.0G\nbase_dir = /usr/bitcoin\n" > ~/.ccache/ccache.conf
+      5: RUN git clone --depth 1 https://github.com/bitcoin/bitcoin.git
+      6: RUN cd bitcoin && git fetch origin --tags && git checkout tags/v27.1
+      7: RUN cd bitcoin && ./autogen.sh
+      8: RUN cd bitcoin && ./configure CC="clang" CXX="clang++"
+      9: RUN cd bitcoin && make -j"$(($(nproc)+1))" src/bitcoind src/bitcoin-cli
+      10: FROM debian:stable-slim AS runner
+      11: WORKDIR /usr/app
+      12: RUN apt-get update
+      13: RUN apt-get install -y libevent-dev
+      14: COPY --from=builder /usr/bitcoin/src/bitcoind /usr/app/bitcoind
+      15: COPY --from=builder /usr/bitcoin/src/bitcoin-cli /usr/app/bitcoin-cli
+      16: ENV PATH=$PATH:/usr/app
+      17: RUN mkdir -p /home/bitcoin/.bitcoin
+      18: VOLUME ["/home/bitcoin/.bitcoin"]
   arise-mainnet:
     instructions:
       <<: *baseInstructions
-      16: EXPOSE 8332 8333
-      17: ENTRYPOINT ["/usr/app/bitcoind"]
+      19: EXPOSE 8332 8333
+      20: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-signet:
     instructions:
       <<: *baseInstructions
-      16: EXPOSE 38332 38333
-      17: ENTRYPOINT ["/usr/app/bitcoind"]
+      19: EXPOSE 38332 38333
+      20: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-testnet:
     instructions:
       <<: *baseInstructions
-      16: EXPOSE 18332 18333
-      17: ENTRYPOINT ["/usr/app/bitcoind"]
+      19: EXPOSE 18332 18333
+      20: ENTRYPOINT ["/usr/app/bitcoind"]
   arise-testnet4:
     instructions:
       <<: *baseInstructions
-      16: EXPOSE 48332 48333
-      17: ENTRYPOINT ["/usr/app/bitcoind"]
+      19: EXPOSE 48332 48333
+      20: ENTRYPOINT ["/usr/app/bitcoind"]
 network: arise
 services:
   arise-bitcoind:
