@@ -80,8 +80,9 @@ services:
       - 0:0
   arise-electrs:
     command:
-      0: --log-filters=INFO
-      1: --network=bitcoin
+      0: --daemon-dir=/home/bitcoin/.bitcoin
+      1: --log-filters=INFO
+      2: --network=bitcoin
     image: arise-electrs
     ports:
       - 4224:4224
