@@ -50,12 +50,12 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
     "arise-testnet": testnet,
     "arise-testnet4": testnet4,
   }
-  service_name: ServiceName = "arise-mainnet"
+  daemon_name: ServiceName = "arise-mainnet"
   try:
-    service_name = next(filter(lambda value: value[1], network_select.items()))[0]
+    daemon_name = next(filter(lambda value: value[1], network_select.items()))[0]
   except StopIteration:
     pass
-  service: Service = SERVICES[service_name]
+  daemon: Service = SERVICES[daemon_name]
 
   ### Attempts to create network if not exist ###
   try:
@@ -63,12 +63,11 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
   except APIError:
     pass
 
-  ### Deploy specified service ###
-  for _ in track(range(1), f"Deploy { service_name }".ljust(42)):
-    flags: List[str] = list(service.command.values())
-    ports: Dict[str, int] = {port.split(":")[0]: int(port.split(":")[1]) for port in service.ports}
+  for _ in track(range(1), f"Deploy { daemon_name }".ljust(42)):
+    flags: List[str] = list(daemon.command.values())
+    ports: Dict[str, int] = {port.split(":")[0]: int(port.split(":")[1]) for port in daemon.ports}
     client.containers.run(
-      service.image,
+      daemon.image,
       command=flags,
       detach=True,
       environment=service.env_vars,
