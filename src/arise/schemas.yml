@@ -68,13 +68,14 @@ services:
       4: -listenonion=1
       5: -rest=1
       6: -rpcallowip=0.0.0.0/0
-      7: -rpcauth=arise:1edc333d33edaa432f1a83a02825a3aa\$e5ab6ec4c6a8b9605016d5343553e106a8cd17ada223941945d3dda19604db92
-      8: -rpcbind=0.0.0.0
+      7: -rpcbind=0.0.0.0
+      8: -rpcpassword=arise
       9: -rpcservertimeout=120
-      10: -rpcworkqueue=128
-      11: -server=1
-      12: -txindex=1
-      13: -upnp=0
+      10: -rpcuser=arise
+      11: -rpcworkqueue=128
+      12: -server=1
+      13: -txindex=1
+      14: -upnp=0
     image: arise-bitcoind
     ports:
       - 0:0
@@ -99,9 +100,9 @@ services:
   arise-signet:
     command:
       <<: *baseCommand
-      14: -port=38333
-      15: -rpcport=38332
-      16: -signet
+      15: -port=38333
+      16: -rpcport=38332
+      17: -signet
     image: arise-signet
     ports:
       - 38332:38332
@@ -109,9 +110,9 @@ services:
   arise-testnet:
     command:
       <<: *baseCommand
-      14: -port=18333
-      15: -rpcport=18332
-      16: -testnet
+      15: -port=18333
+      16: -rpcport=18332
+      17: -testnet
     image: arise-testnet
     ports:
       - 18332:18332
@@ -119,9 +120,9 @@ services:
   arise-testnet4:
     command:
       <<: *baseCommand
-      14: -port=48333
-      15: -rpcport=48332
-      16: -testnet4
+      15: -port=48333
+      16: -rpcport=48332
+      17: -testnet4
     image: arise-testnet4
     ports:
       - 48332:48332
