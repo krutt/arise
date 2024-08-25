@@ -38,7 +38,9 @@ builds:
   arise-testnet4:
     instructions:
       <<: *baseInstructions
+      2: RUN apt-get install -y autoconf bsdmainutils build-essential ccache g++ gcc git libboost-all-dev libtool pkg-config
       6: RUN cd bitcoin && git fetch origin pull/29775/head:pr-29775 && git checkout pr-29775
+      8: RUN cd bitcoin && ./configure --with-incompatible-bdb CC=gcc CXX=g++
       19: EXPOSE 48332 48333
       20: ENTRYPOINT ["/usr/app/bitcoind"]
 network: arise
