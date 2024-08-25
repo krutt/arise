@@ -27,11 +27,12 @@ from arise.types import Build
 
 
 @command
+@option("--electrs", is_flag=True, help="Build arise-electrs image", type=bool)
 @option("--mainnet", is_flag=True, help="Build arise-mainnet image", type=bool)
 @option("--signet", is_flag=True, help="Build arise-signet image", type=bool)
 @option("--testnet", is_flag=True, help="Build arise-testnet image", type=bool)
 @option("--testnet4", is_flag=True, help="Build arise-testnet4 image", type=bool)
-def build(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
+def build(electrs: bool, mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
   """Build peripheral images for the desired cluster."""
   client: DockerClient
   try:
@@ -50,6 +51,7 @@ def build(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
   )
   build_select: Dict[str, bool] = {
     "arise-bitcoind": False,  # exclude base-image
+    "arise-electrs": electrs,
     "arise-mainnet": mainnet,
     "arise-signet": signet,
     "arise-testnet": testnet,

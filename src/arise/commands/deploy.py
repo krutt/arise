@@ -30,7 +30,8 @@ from arise.types import Service, ServiceName
 @option("--signet", is_flag=True, type=bool)
 @option("--testnet", is_flag=True, type=bool)
 @option("--testnet4", is_flag=True, type=bool)
-def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
+@option("--with-electrs", is_flag=True, type=bool)
+def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_electrs: bool) -> None:
   """Deploy cluster."""
   client: DockerClient
   try:
@@ -41,8 +42,9 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
     rich_print("[red bold]Unable to connect to docker daemon.")
     return
 
-  selector: Dict[ServiceName, bool] = {
+  network_selector: Dict[ServiceName, bool] = {
     "arise-bitcoind": False,  # exclude base-image
+    "arise-electrs": False, # exclude peripheral arise-electrs
     "arise-mainnet": mainnet,
     "arise-signet": signet,
     "arise-testnet": testnet,
@@ -50,7 +52,7 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
   }
   service_name: ServiceName = "arise-mainnet"
   try:
-    service_name = next(filter(lambda value: value[1], selector.items()))[0]
+    service_name = next(filter(lambda value: value[1], network_selector.items()))[0]
   except StopIteration:
     pass
   service: Service = SERVICES[service_name]

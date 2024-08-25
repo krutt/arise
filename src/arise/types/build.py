@@ -22,7 +22,12 @@ class Build(BaseModel):
 
 
 BuildEnum = Literal[
-  "arise-bitcoind", "arise-mainnet", "arise-signet", "arise-testnet", "arise-testnet4"
+  "arise-bitcoind",
+  "arise-electrs",
+  "arise-mainnet",
+  "arise-signet",
+  "arise-testnet",
+  "arise-testnet4",
 ]
 
 

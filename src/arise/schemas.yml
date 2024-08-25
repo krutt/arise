@@ -20,6 +20,20 @@ builds:
       16: ENV PATH=$PATH:/usr/app
       17: RUN mkdir -p /home/bitcoin/.bitcoin
       18: VOLUME ["/home/bitcoin/.bitcoin"]
+  arise-electrs:
+    instructions:
+      0: FROM debian:stable-slim AS builder
+      1: RUN apt-get update
+      2: RUN apt-get install -y bsdmainutils build-essential cargo clang git
+      3: WORKDIR /usr
+      4: RUN git clone --depth 1 https://github.com/romanz/electrs.git
+      5: RUN cd electrs && cargo install --config net.git-fetch-with-cli=true --locked --path .
+      6: FROM debian:stable-slim AS runner
+      7: WORKDIR /usr/app
+      7: RUN apt-get update
+      8: RUN apt-get install -y librocksdb-dev
+      9: COPY --from=builder /root/.cargo/bin/electrs /usr/app/electrs
+      10: ENTRYPOINT ["/usr/app/electrs"]
   arise-mainnet:
     instructions:
       <<: *baseInstructions
@@ -69,6 +83,14 @@ services:
     image: arise-bitcoind
     ports:
       - 0:0
+  arise-electrs:
+    command:
+      0: --log-filters=INFO
+      1: --network=bitcoin
+    image: arise-electrs
+    ports:
+      - 4224:4224
+      - 50001:50001
   arise-mainnet:
     command:
       <<: *baseCommand
