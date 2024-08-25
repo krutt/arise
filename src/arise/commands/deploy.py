@@ -42,7 +42,7 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
     rich_print("[red bold]Unable to connect to docker daemon.")
     return
 
-  network_selector: Dict[ServiceName, bool] = {
+  network_select: Dict[ServiceName, bool] = {
     "arise-bitcoind": False,  # exclude base-image
     "arise-electrs": False, # exclude peripheral arise-electrs
     "arise-mainnet": mainnet,
@@ -52,7 +52,7 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
   }
   service_name: ServiceName = "arise-mainnet"
   try:
-    service_name = next(filter(lambda value: value[1], network_selector.items()))[0]
+    service_name = next(filter(lambda value: value[1], network_select.items()))[0]
   except StopIteration:
     pass
   service: Service = SERVICES[service_name]
