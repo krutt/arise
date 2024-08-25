@@ -22,14 +22,14 @@ from rich.progress import track
 
 ### Local modules ###
 from arise.configs import NETWORK, SERVICES
-from arise.types import Service, ServiceName
+from arise.types import Chain, Service, ServiceName
 
 
 @command
-@option("--mainnet", is_flag=True, type=bool)
-@option("--signet", is_flag=True, type=bool)
-@option("--testnet", is_flag=True, type=bool)
-@option("--testnet4", is_flag=True, type=bool)
+@option("--mainnet", cls=Chain, is_flag=True, type=bool, variants=("signet", "testnet", "testnet4"))
+@option("--signet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "testnet", "testnet4"))
+@option("--testnet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "signet", "testnet4"))
+@option("--testnet4", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "signet", "testnet"))
 @option("--with-electrs", is_flag=True, type=bool)
 def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_electrs: bool) -> None:
   """Deploy cluster."""

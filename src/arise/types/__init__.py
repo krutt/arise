@@ -13,8 +13,8 @@
 ### Local modules ###
 from arise.types.blockchain_info import BlockchainInfo
 from arise.types.build import Build, BuildEnum
+from arise.types.chain import Chain
 from arise.types.mempool_info import MempoolInfo
-from arise.types.mutex_option import MutexOption
 from arise.types.service import Service, ServiceName
 
 
@@ -22,8 +22,8 @@ __all__ = (
   "BlockchainInfo",
   "Build",
   "BuildEnum",
+  "Chain",
   "MempoolInfo",
-  "MutexOption",
   "Service",
   "ServiceName",
 )
