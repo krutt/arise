@@ -67,19 +67,14 @@ services:
       3: -listen=1
       4: -listenonion=1
       5: -rest=1
-      6: -rpcallowip=127.0.0.1
-      7: -rpcallowip=10.0.0.0/8
-      8: -rpcallowip=192.168.0.0/16
-      9: -rpcallowip=172.0.0.0/8
-      10: -rpcbind=0.0.0.0
-      11: -rpcservertimeout=120
-      12: -rpcpassword=arise
-      13: -rpcuser=arise
-      14: -rpcworkqueue=128
-      15: -server=1
-      16: -txindex=1
-      17: -upnp=0
-      18: -whitelist=127.0.0.1
+      6: -rpcallowip=0.0.0.0/0
+      7: -rpcauth=arise:1edc333d33edaa432f1a83a02825a3aa$$e5ab6ec4c6a8b9605016d5343553e106a8cd17ada223941945d3dda19604db92
+      8: -rpcbind=0.0.0.0
+      9: -rpcservertimeout=120
+      10: -rpcworkqueue=128
+      11: -server=1
+      12: -txindex=1
+      13: -upnp=0
     image: arise-bitcoind
     ports:
       - 0:0
@@ -94,8 +89,8 @@ services:
   arise-mainnet:
     command:
       <<: *baseCommand
-      19: -port=8333
-      20: -rpcport=8332
+      14: -port=8333
+      15: -rpcport=8332
     image: arise-mainnet
     ports:
       - 8332:8332
@@ -103,9 +98,9 @@ services:
   arise-signet:
     command:
       <<: *baseCommand
-      19: -port=38333
-      20: -rpcport=38332
-      21: -signet
+      14: -port=38333
+      15: -rpcport=38332
+      16: -signet
     image: arise-signet
     ports:
       - 38332:38332
@@ -113,9 +108,9 @@ services:
   arise-testnet:
     command:
       <<: *baseCommand
-      19: -port=18333
-      20: -rpcport=18332
-      21: -testnet
+      14: -port=18333
+      15: -rpcport=18332
+      16: -testnet
     image: arise-testnet
     ports:
       - 18332:18332
@@ -123,9 +118,9 @@ services:
   arise-testnet4:
     command:
       <<: *baseCommand
-      19: -port=48333
-      20: -rpcport=48332
-      21: -testnet4
+      14: -port=48333
+      15: -rpcport=48332
+      16: -testnet4
     image: arise-testnet4
     ports:
       - 48332:48332
