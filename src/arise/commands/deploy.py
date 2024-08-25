@@ -11,7 +11,7 @@
 # *************************************************************
 
 ### Standard packages ###
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 ### Third-party packages ###
 from click import command, option
