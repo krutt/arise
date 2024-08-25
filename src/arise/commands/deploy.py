@@ -44,7 +44,7 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
 
   network_select: Dict[ServiceName, bool] = {
     "arise-bitcoind": False,  # exclude base-image
-    "arise-electrs": False, # exclude peripheral arise-electrs
+    "arise-electrs": False,  # exclude peripheral arise-electrs
     "arise-mainnet": mainnet,
     "arise-signet": signet,
     "arise-testnet": testnet,
@@ -73,6 +73,35 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
       name=daemon_name,
       network=NETWORK,
       ports=ports,  # type: ignore
+    )
+
+  ### Select peripheral services ###
+  peripheral_select: Dict[ServiceName, bool] = {
+    "arise-bitcoind": False,  # exclude base-image
+    "arise-electrs": with_electrs,
+    "arise-mainnet": False,  # exclude non-peripheral image arise-mainnet
+    "arise-signet": False,  # exclude non-peripheral image arise-signet
+    "arise-testnet": False,  # exclude non-peripheral image arise-testnet
+    "arise-testnet4": False,  # exclude non-peripheral image arise-testnet4
+  }
+  peripherals: List[Tuple[ServiceName, Service]] = [
+    (key, value) for key, value in SERVICES.items() if peripheral_select[key]
+  ]
+  for name, peripheral in track(peripherals, f"Deploy peripheral services".ljust(42)):
+    flags: List[str] = list(peripheral.command.values())
+    if name == "arise-electrs":
+      flags.append(f"--daemon-p2p-addr={daemon_name}:8333")
+      flags.append(f"--daemon-rpc-addr={daemon_name}:8332")
+    ports: Dict[str, int] = {p.split(":")[0]: int(p.split(":")[1]) for p in peripheral.ports}
+    client.containers.run(
+      peripheral.image,
+      command=flags,
+      detach=True,
+      environment=peripheral.env_vars,
+      name=name,
+      network=NETWORK,
+      ports=ports,  # type: ignore
+      volumes_from=[daemon_name],
     )
 
 
