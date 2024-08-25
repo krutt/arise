@@ -68,7 +68,7 @@ services:
       4: -listenonion=1
       5: -rest=1
       6: -rpcallowip=0.0.0.0/0
-      7: -rpcauth=arise:1edc333d33edaa432f1a83a02825a3aa$$e5ab6ec4c6a8b9605016d5343553e106a8cd17ada223941945d3dda19604db92
+      7: -rpcauth=arise:1edc333d33edaa432f1a83a02825a3aa\$e5ab6ec4c6a8b9605016d5343553e106a8cd17ada223941945d3dda19604db92
       8: -rpcbind=0.0.0.0
       9: -rpcservertimeout=120
       10: -rpcworkqueue=128
