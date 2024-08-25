@@ -76,5 +76,4 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
     )
 
 
-
 __all__ = ("deploy",)
