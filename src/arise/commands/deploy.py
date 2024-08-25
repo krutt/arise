@@ -57,7 +57,6 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
     pass
   daemon: Service = SERVICES[daemon_name]
 
-  ### Attempts to create network if not exist ###
   try:
     client.networks.create(NETWORK, check_duplicate=True)
   except APIError:
@@ -70,8 +69,8 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
       daemon.image,
       command=flags,
       detach=True,
-      environment=service.env_vars,
-      name=service_name,
+      environment=daemon.env_vars,
+      name=daemon_name,
       network=NETWORK,
       ports=ports,  # type: ignore
     )
