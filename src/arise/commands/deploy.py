@@ -11,6 +11,7 @@
 # *************************************************************
 
 ### Standard packages ###
+from time import sleep
 from typing import Dict, List, Tuple
 
 ### Third-party packages ###
@@ -75,7 +76,8 @@ def deploy(mainnet: bool, signet: bool, testnet: bool, testnet4: bool, with_elec
       ports=ports,  # type: ignore
     )
 
-  ### Select peripheral services ###
+  sleep(1)
+
   peripheral_select: Dict[ServiceName, bool] = {
     "arise-bitcoind": False,  # exclude base-image
     "arise-electrs": with_electrs,
