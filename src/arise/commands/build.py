@@ -29,10 +29,20 @@ from arise.types import Build
 @command
 @option("--electrs", is_flag=True, help="Build arise-electrs image", type=bool)
 @option("--mainnet", is_flag=True, help="Build arise-mainnet image", type=bool)
+@option("--mempool", is_flag=True, help="Build arise-mempool-backend image", type=bool)
+@option("--mysql", is_flag=True, help="Build arise-mysql image", type=bool)
 @option("--signet", is_flag=True, help="Build arise-signet image", type=bool)
 @option("--testnet", is_flag=True, help="Build arise-testnet image", type=bool)
 @option("--testnet4", is_flag=True, help="Build arise-testnet4 image", type=bool)
-def build(electrs: bool, mainnet: bool, signet: bool, testnet: bool, testnet4: bool) -> None:
+def build(
+  electrs: bool,
+  mainnet: bool,
+  mempool: bool,
+  mysql: bool,
+  signet: bool,
+  testnet: bool,
+  testnet4: bool,
+) -> None:
   """Build peripheral images for the desired cluster."""
   client: DockerClient
   try:
@@ -53,6 +63,8 @@ def build(electrs: bool, mainnet: bool, signet: bool, testnet: bool, testnet4: b
     "arise-bitcoind": False,  # exclude base-image
     "arise-electrs": electrs,
     "arise-mainnet": mainnet,
+    "arise-mempool-backend": mempool,
+    "arise-mysql": mysql,
     "arise-signet": signet,
     "arise-testnet": testnet,
     "arise-testnet4": testnet4,
