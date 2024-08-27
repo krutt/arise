@@ -93,9 +93,9 @@
   <text
     font-family='Arial'
     font-size='1.2rem'
-    y='10rem'
+    y='12rem'
     >
-    <tspan dy='1.6rem' x='16rem'>
+    <tspan dy='0' x='16rem'>
       Run Bitcoin and peripheral services on the Terminal
     </tspan>
     <tspan dy='1.6rem' x='16rem'>
