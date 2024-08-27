@@ -39,6 +39,33 @@ builds:
       <<: *baseInstructions
       19: EXPOSE 8332 8333
       20: ENTRYPOINT ["/usr/app/bitcoind"]
+  arise-mempool-backend:
+    instructions:
+      0: FROM node:20.15.0-buster-slim AS builder
+      1: ARG commitHash
+      2: ENV MEMPOOL_COMMIT_HASH=${commitHash}
+      3: WORKDIR /usr/src
+      4: RUN apt-get update
+      5: RUN apt-get install -y build-essential ca-certificates curl git pkg-config python3
+      6: RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sed 's#/proc/self/exe#\/bin\/sh#g' | sh -s -- -y --default-toolchain stable
+      7: ENV PATH="/root/.cargo/bin:$PATH"
+      8: RUN git clone --depth 1 https://github.com/mempool/mempool.git
+      9: RUN mv mempool/backend build
+      10: RUN mv mempool/docker/backend/mempool-config.json mempool-config.json
+      11: RUN mv mempool/docker/backend/start.sh start.sh
+      12: RUN mv mempool/docker/backend/wait-for-it.sh wait-for-it.sh
+      13: RUN mkdir rust && mv mempool/rust/gbt rust/gbt
+      14: ENV FD=/usr/src/build/rust-gbt
+      15: RUN cd build && npm install --omit=dev --omit=optional
+      16: RUN cd build && npm run package
+      17: FROM node:20.15.0-buster-slim AS runner
+      18: WORKDIR /usr/app
+      19: COPY --from=builder /usr/src/build/package /usr/app/package
+      20: COPY --from=builder /usr/src/mempool-config.json /usr/app/mempool-config.json
+      21: COPY --from=builder /usr/src/start.sh /usr/app/start.sh
+      22: COPY --from=builder /usr/src/wait-for-it.sh /usr/app/wait-for-it.sh
+      23: RUN sed -i 's#/backend/package/index.js#\/usr\/app\/package\/index.js#' /usr/app/start.sh
+      24: ENTRYPOINT ["/usr/app/start.sh"]
   arise-signet:
     instructions:
       <<: *baseInstructions
@@ -97,6 +124,13 @@ services:
     ports:
       - 8332:8332
       - 8333:8333
+  arise-mempool-backend:
+    command: {}
+    env_vars:
+      - ELECTRUM_HOST=arise-electrs
+    image: arise-mempool-backend
+    ports:
+      - 8999:8999
   arise-signet:
     command:
       <<: *baseCommand

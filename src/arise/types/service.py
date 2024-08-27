@@ -31,6 +31,7 @@ ServiceName = Literal[
   "arise-bitcoind",
   "arise-electrs",
   "arise-mainnet",
+  "arise-mempool-backend",
   "arise-signet",
   "arise-testnet",
   "arise-testnet4",
