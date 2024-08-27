@@ -39,6 +39,12 @@ builds:
       <<: *baseInstructions
       19: EXPOSE 8332 8333
       20: ENTRYPOINT ["/usr/app/bitcoind"]
+  arise-mariadb:
+    instructions:
+      0: FROM mariadb:10.5.21
+      1: VOLUME ["/var/lib/mysql"]
+      2: EXPOSE 3306
+      3: ENTRYPOINT ["docker-entrypoint.sh"]
   arise-mempool-backend:
     instructions:
       0: FROM node:20.15.0-buster-slim AS builder
@@ -66,12 +72,6 @@ builds:
       22: COPY --from=builder /usr/src/wait-for-it.sh /usr/app/wait-for-it.sh
       23: RUN sed -i 's#/backend/package/index.js#\/usr\/app\/package\/index.js#' /usr/app/start.sh
       24: ENTRYPOINT ["/usr/app/start.sh"]
-  arise-mysql:
-    instructions:
-      0: FROM mysql:8.4.2
-      1: VOLUME ["/var/lib/mysql"]
-      2: EXPOSE 3306 33060
-      3: ENTRYPOINT ["docker-entrypoint.sh"]
   arise-signet:
     instructions:
       <<: *baseInstructions
@@ -131,19 +131,7 @@ services:
     ports:
       - 8332:8332
       - 8333:8333
-  arise-mempool-backend:
-    command: {}
-    env_vars:
-      - DATABASE_DATABASE=arise
-      - DATABASE_HOST=arise-mysql
-      - DATABASE_PASSWORD=arise
-      - DATABASE_USERNAME=arise
-      - ELECTRUM_HOST=arise-electrs
-      - ELECTRUM_PORT=50001
-    image: arise-mempool-backend
-    ports:
-      - 8999:8999
-  arise-mysql:
+  arise-mariadb:
     command:
       0: mysqld
     env_vars:
@@ -151,10 +139,21 @@ services:
       - MYSQL_DATABASE=arise
       - MYSQL_PASSWORD=arise
       - MYSQL_USER=arise
-    image: arise-mysql
+    image: arise-mariadb
     ports:
       - 3306:3306
-      - 33060:33060
+  arise-mempool-backend:
+    command: {}
+    env_vars:
+      - DATABASE_DATABASE=arise
+      - DATABASE_HOST=arise-mariadb
+      - DATABASE_PASSWORD=arise
+      - DATABASE_USERNAME=arise
+      - ELECTRUM_HOST=arise-electrs
+      - ELECTRUM_PORT=50001
+    image: arise-mempool-backend
+    ports:
+      - 8999:8999
   arise-signet:
     command:
       <<: *baseCommand
