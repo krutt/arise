@@ -115,8 +115,9 @@ services:
   arise-electrs:
     command:
       0: --daemon-dir=/home/bitcoin/.bitcoin
-      1: --log-filters=INFO
-      2: --network=bitcoin
+      1: --electrum-rpc-addr=0.0.0.0:50001
+      2: --log-filters=INFO
+      3: --network=bitcoin
     image: arise-electrs
     ports:
       - 4224:4224
