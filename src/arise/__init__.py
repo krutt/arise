@@ -2,7 +2,7 @@
 # coding:utf-8
 # Copyright (C) 2024 All rights reserved.
 # FILENAME:    ~~/src/arise/__init__.py
-# VERSION:     0.1.4
+# VERSION:     0.1.5
 # CREATED:     2024-07-07 16:11
 # AUTHOR:      Sitt Guruvanich <aekasitt.g+github@siamintech.co.th>
 # DESCRIPTION: https://www.w3docs.com/snippets/python/what-is-init-py-for.html
@@ -15,4 +15,4 @@ from arise.commands import build, clean, deploy, dashboard
 
 __all__ = ("build", "clean", "dashboard", "deploy")
 
-__version__ = "0.1.4"
+__version__ = "0.1.5"
