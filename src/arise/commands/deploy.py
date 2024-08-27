@@ -34,6 +34,7 @@ from arise.types import Chain, Service, ServiceName
 @option("--with-electrs", is_flag=True, type=bool)
 @option("--with-mariadb", is_flag=True, type=bool)
 @option("--with-mempool", is_flag=True, type=bool)
+@option("--with-mutiny-web", is_flag=True, type=bool)
 def deploy(
   mainnet: bool,
   signet: bool,
@@ -41,7 +42,8 @@ def deploy(
   testnet4: bool,
   with_electrs: bool,
   with_mariadb: bool,
-  with_mempool,
+  with_mempool: bool,
+  with_mutiny_web: bool,
 ) -> None:
   """Deploy cluster."""
   client: DockerClient
@@ -59,6 +61,7 @@ def deploy(
     "arise-mainnet": mainnet,
     "arise-mempool-backend": False,  # exclude peripheral arise-mempool-backend
     "arise-mariadb": False,  # exclude peripheral arise-mariadb
+    "arise-mutiny-web": False,  # exclude peripheral arise-mutiny-web
     "arise-signet": signet,
     "arise-testnet": testnet,
     "arise-testnet4": testnet4,
@@ -96,6 +99,7 @@ def deploy(
     "arise-mainnet": False,  # exclude non-peripheral image arise-mainnet
     "arise-mariadb": with_mariadb,
     "arise-mempool-backend": with_mempool,
+    "arise-mutiny-web": with_mutiny_web,
     "arise-signet": False,  # exclude non-peripheral image arise-signet
     "arise-testnet": False,  # exclude non-peripheral image arise-testnet
     "arise-testnet4": False,  # exclude non-peripheral image arise-testnet4

@@ -27,6 +27,7 @@ BuildEnum = Literal[
   "arise-mainnet",
   "arise-mariadb",
   "arise-mempool-backend",
+  "arise-mutiny-web",
   "arise-signet",
   "arise-testnet",
   "arise-testnet4",
