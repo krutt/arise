@@ -32,7 +32,6 @@ from arise.types import Chain, Service, ServiceName
 @option("--testnet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "signet", "testnet4"))
 @option("--testnet4", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "signet", "testnet"))
 @option("--with-electrs", is_flag=True, type=bool)
-@option("--with-mariadb", is_flag=True, type=bool)
 @option("--with-mempool", is_flag=True, type=bool)
 @option("--with-mutiny-web", is_flag=True, type=bool)
 def deploy(
@@ -41,7 +40,6 @@ def deploy(
   testnet: bool,
   testnet4: bool,
   with_electrs: bool,
-  with_mariadb: bool,
   with_mempool: bool,
   with_mutiny_web: bool,
 ) -> None:
@@ -56,12 +54,7 @@ def deploy(
     return
 
   network_select: Dict[ServiceName, bool] = {
-    "arise-bitcoind": False,  # exclude base-image
-    "arise-electrs": False,  # exclude peripheral arise-electrs
     "arise-mainnet": mainnet,
-    "arise-mempool-backend": False,  # exclude peripheral arise-mempool-backend
-    "arise-mariadb": False,  # exclude peripheral arise-mariadb
-    "arise-mutiny-web": False,  # exclude peripheral arise-mutiny-web
     "arise-signet": signet,
     "arise-testnet": testnet,
     "arise-testnet4": testnet4,
@@ -91,27 +84,42 @@ def deploy(
       ports=ports,  # type: ignore
     )
 
-  sleep(1)
+  middleware_select: Dict[ServiceName, bool] = {"arise-mariadb": with_mempool}
+  middlewares: List[Tuple[ServiceName, Service]] = [
+    (key, value)
+    for key, value in SERVICES.items()
+    if value.service_type == "middleware" and middleware_select[key]
+  ]
+  for name, middleware in track(middlewares, f"Deploy middleware services".ljust(42)):
+    flags: List[str] = list(middleware.command.values())
+    ports: Dict[str, int] = {p.split(":")[0]: int(p.split(":")[1]) for p in middleware.ports}
+    client.containers.run(
+      middleware.image,
+      command=flags,
+      detach=True,
+      environment=middleware.env_vars,
+      name=name,
+      network=NETWORK,
+      ports=ports,  # type: ignore
+    )
 
   peripheral_select: Dict[ServiceName, bool] = {
-    "arise-bitcoind": False,  # exclude base-image
     "arise-electrs": with_electrs,
-    "arise-mainnet": False,  # exclude non-peripheral image arise-mainnet
-    "arise-mariadb": with_mariadb,
     "arise-mempool-backend": with_mempool,
     "arise-mutiny-web": with_mutiny_web,
-    "arise-signet": False,  # exclude non-peripheral image arise-signet
-    "arise-testnet": False,  # exclude non-peripheral image arise-testnet
-    "arise-testnet4": False,  # exclude non-peripheral image arise-testnet4
   }
   peripherals: List[Tuple[ServiceName, Service]] = [
-    (key, value) for key, value in SERVICES.items() if peripheral_select[key]
+    (key, value)
+    for key, value in SERVICES.items()
+    if value.service_type == "peripheral" and peripheral_select[key]
   ]
   for name, peripheral in track(peripherals, f"Deploy peripheral services".ljust(42)):
     flags: List[str] = list(peripheral.command.values())
     if name == "arise-electrs":
       flags.append(f"--daemon-p2p-addr={daemon_name}:8333")
       flags.append(f"--daemon-rpc-addr={daemon_name}:8332")
+    elif name == "arise-mempool-backend":
+      sleep(15)  # wait for arise-mariadb
     ports: Dict[str, int] = {p.split(":")[0]: int(p.split(":")[1]) for p in peripheral.ports}
     client.containers.run(
       peripheral.image,

@@ -140,6 +140,7 @@ services:
     image: arise-bitcoind
     ports:
       - 0:0
+    type: abstract
   arise-electrs:
     command:
       0: --daemon-dir=/home/bitcoin/.bitcoin
@@ -150,6 +151,7 @@ services:
     ports:
       - 4224:4224
       - 50001:50001
+    type: peripheral
   arise-mainnet:
     command:
       <<: *baseCommand
@@ -159,6 +161,7 @@ services:
     ports:
       - 8332:8332
       - 8333:8333
+    type: node
   arise-mariadb:
     command:
       0: mysqld
@@ -170,6 +173,7 @@ services:
     image: arise-mariadb
     ports:
       - 3306:3306
+    type: middleware
   arise-mempool-backend:
     command: {}
     env_vars:
@@ -182,6 +186,7 @@ services:
     image: arise-mempool-backend
     ports:
       - 8999:8999
+    type: peripheral
   arise-mutiny-web:
     command:
       0: nginx
@@ -190,6 +195,7 @@ services:
     image: arise-mutiny-web
     ports:
       - 8000:8000
+    type: peripheral
   arise-signet:
     command:
       <<: *baseCommand
@@ -200,6 +206,7 @@ services:
     ports:
       - 38332:38332
       - 38333:38333
+    type: node
   arise-testnet:
     command:
       <<: *baseCommand
@@ -210,6 +217,7 @@ services:
     ports:
       - 18332:18332
       - 18333:18333
+    type: node
   arise-testnet4:
     command:
       <<: *baseCommand
@@ -220,3 +228,4 @@ services:
     ports:
       - 48332:48332
       - 48333:48333
+    type: node
