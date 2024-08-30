@@ -89,14 +89,14 @@ class Bellion(BaseModel):
             blockchain_info: BlockchainInfo = TypeAdapter(BlockchainInfo).validate_json(
               self.daemon.exec_run(
                 """
-                bitcoin-cli -regtest -rpcuser=arise -rpcpassword=arise getblockchaininfo
+                bitcoin-cli -testnet -rpcuser=arise -rpccookiefile=/home/bitcoin/.bitcoin/.cookie getblockchaininfo
                 """
               ).output
             )
             mempool_info: MempoolInfo = TypeAdapter(MempoolInfo).validate_json(
               self.daemon.exec_run(
                 """
-                bitcoin-cli -regtest -rpcuser=arise -rpcpassword=arise getmempoolinfo
+                bitcoin-cli -testnet -rpcuser=arise -rpccookiefile=/home/bitcoin/.bitcoin/.cookie getmempoolinfo
                 """
               ).output
             )
