@@ -17,7 +17,7 @@ from typing import List
 ### Third-party packages ###
 from click import command
 from docker import DockerClient, from_env
-from docker.errors import DockerException, NotFound
+from docker.errors import DockerException
 from docker.models.containers import Container
 from rich import print as rich_print
 
@@ -38,25 +38,28 @@ def dashboard() -> None:
     return
 
   ### Retrieve bitcoind container ###
-  bitcoind: Container
+  daemon: Container
   try:
-    bitcoind = client.containers.get("arise-testnet4")
-  except NotFound:
-    rich_print('[red bold]Unable to find "arise-testnet4" container.')
+    daemon = next(
+      filter(
+        lambda container: match(r"arise-(mainnet|signet|testnet|testnet4)", container.name),
+        reversed(client.containers.list()),
+      )
+    )
+  except StopIteration:
+    rich_print("[red bold] Cannot find active daemon.")
     return
 
   ### Retrieve other containers ###
   arise_containers: List[Container] = list(
     filter(lambda container: match(r"arise-*", container.name), reversed(client.containers.list()))
   )
-  container_names: List[str] = list(map(lambda container: container.name, arise_containers))
-  print(container_names)
-  return
+  container_names: List[None | str] = list(map(lambda container: container.name, arise_containers))
   bellion: Bellion = Bellion(
-    bitcoind=bitcoind,
     containers=arise_containers,
     container_index=0,
     container_names=container_names,
+    daemon=daemon,
   )
   bellion.display()
 
