@@ -26,15 +26,16 @@ from rich.table import Table
 from rich.text import Text
 
 ### Local modules ###
+from arise.shadows.tusk import Tusk
 from arise.types import BlockchainInfo, MempoolInfo
 
 
 class Bellion(BaseModel):
   model_config: ConfigDict = ConfigDict(arbitrary_types_allowed=True)  # type: ignore[misc]
-  bitcoind: Container
   container_index: StrictInt = 0
   container_names: List[StrictStr] = []
   containers: List[Container] = []
+  daemon: Container
 
   ### Split layouts ###
   body: ClassVar[Layout] = Layout(name="body", minimum_size=4, ratio=8, size=17)
@@ -43,6 +44,7 @@ class Bellion(BaseModel):
   main: ClassVar[Layout] = Layout(size=72)
   pane: ClassVar[Layout] = Layout()
   sidebar: ClassVar[Layout] = Layout(size=24)
+  tusk: ClassVar[Tusk] = Tusk(height=16, width=72)
 
   ### Terminal ###
   terminal: ClassVar[Terminal] = Terminal()
@@ -83,16 +85,16 @@ class Bellion(BaseModel):
           container_name: str = self.container_names[self.container_index]
           body_table: Table = Table(expand=True, show_lines=True)
           body_table.add_column(container_name, "dark_sea_green bold")
-          if match(r"arise-(bitcoind)", container_name):
+          if match(r"arise-(mainnet|signet|testnet|testnet4)", container_name):
             blockchain_info: BlockchainInfo = TypeAdapter(BlockchainInfo).validate_json(
-              self.bitcoind.exec_run(
+              self.daemon.exec_run(
                 """
                 bitcoin-cli -regtest -rpcuser=arise -rpcpassword=arise getblockchaininfo
                 """
               ).output
             )
             mempool_info: MempoolInfo = TypeAdapter(MempoolInfo).validate_json(
-              self.bitcoind.exec_run(
+              self.daemon.exec_run(
                 """
                 bitcoin-cli -regtest -rpcuser=arise -rpcpassword=arise getmempoolinfo
                 """
@@ -134,6 +136,8 @@ class Bellion(BaseModel):
                 "\n",
               )
             )
+          else:
+            body_table.add_row(self.tusk.renderable)
           self.pane["body"].update(body_table)
           self.pane["footer"].update(
             Panel(
