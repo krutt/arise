@@ -27,9 +27,9 @@ pip install arise
 
 ```sh
 $ pip install arise
-> ...
-> Installing collected packages: arise
-> Successfully installed arise-0.1.6
+❯ ...
+❯ Installing collected packages: arise
+❯ Successfully installed arise-0.1.6
 ```
 
 </details>
@@ -47,7 +47,22 @@ arise build --testnet4 --electrs --mempool --mutiny-web
 
 ```sh
 $ arise build --testnet4 --electrs --mempool --mutiny-web
-> 
+❯
+❯ ---> c7c857e7f240
+❯  Step 13/13 : ENTRYPOINT ["/usr/app/electrs"]
+❯
+❯ ---> [Warning] The requested image's platform (linux/amd64) does not match the detected host
+❯ ---> Running in 6b6bb5257753
+❯ Removing intermediate container 6b6bb5257753
+❯ ---> 7c067a938f79
+❯ Successfully built 7c067a938f79
+❯ Successfully tagged arise-electrs:latest
+❯
+❯ Build specified images:                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❯ Built <Image 'arise-testnet4'> successfully
+❯ Built <Image 'arise-electrs'> successfully
+❯ Built <Image 'arise-mempool'> successfully
+❯ Built <Image 'arise-mutiny-web'> successfully
 ```
 
 </details>
@@ -64,10 +79,10 @@ arise deploy --testnet4 --with-electrs --with-mempool --with-mutiny-web
 <summary>Sample output when running deploy command</summary>
 
 ```sh
-$ arise deploy
-> Deploy specified local cluster:            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:01
-> Generate addresses:                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
-> Mine initial capital for parties:          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+$ arise deploy --signet --with-electrs --with-mempool --with-mutiny-web
+❯ Deploy arise-signet                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+❯ Deploy middleware services                 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+❯ Deploy peripheral services                 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
 ```
 
 </details>
@@ -104,5 +119,4 @@ sudo ln -s "$HOME/.docker/run/docker.sock" /var/run/docker.sock
 ## License
 
 This project is licensed under the terms of the MIT license.
-
 
