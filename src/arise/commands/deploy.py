@@ -116,8 +116,19 @@ def deploy(
   for name, peripheral in track(peripherals, f"Deploy peripheral services".ljust(42)):
     flags: List[str] = list(peripheral.command.values())
     if name == "arise-electrs":
-      flags.append(f"--daemon-p2p-addr={daemon_name}:8333")
-      flags.append(f"--daemon-rpc-addr={daemon_name}:8332")
+      if daemon_name == "arise-mainnet":
+        flags.append("--daemon-p2p-addr=arise-mainnet:8333")
+        flags.append("--daemon-rpc-addr=arise-mainnet:8332")
+      elif daemon_name == "arise-signet":
+        flags.append("--daemon-p2p-addr=arise-signet:38333")
+        flags.append("--daemon-rpc-addr=arise-signet:38332")
+      elif daemon_name == "arise-testnet":
+        flags.append("--daemon-p2p-addr=arise-testnet:18333")
+        flags.append("--daemon-rpc-addr=arise-testnet:18332")
+      elif daemon_name == "arise-testnet4":
+        flags.append("--daemon-p2p-addr=arise-testnet4:48333")
+        flags.append("--daemon-rpc-addr=arise-testnet4:48332")
+      sleep(1)  # wait for authentication cookie to be generated
     elif name == "arise-mempool-backend":
       sleep(15)  # wait for arise-mariadb
     ports: Dict[str, int] = {p.split(":")[0]: int(p.split(":")[1]) for p in peripheral.ports}
