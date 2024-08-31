@@ -105,7 +105,7 @@ def deploy(
 
   peripheral_select: Dict[ServiceName, bool] = {
     "arise-electrs": with_electrs,
-    "arise-mempool-backend": with_mempool,
+    "arise-mempool": with_mempool,
     "arise-mutiny-web": with_mutiny_web,
   }
   peripherals: List[Tuple[ServiceName, Service]] = [
@@ -129,7 +129,7 @@ def deploy(
         flags.append("--daemon-p2p-addr=arise-testnet4:48333")
         flags.append("--daemon-rpc-addr=arise-testnet4:48332")
       sleep(1)  # wait for authentication cookie to be generated
-    elif name == "arise-mempool-backend":
+    elif name == "arise-mempool":
       sleep(15)  # wait for arise-mariadb
     ports: Dict[str, int] = {p.split(":")[0]: int(p.split(":")[1]) for p in peripheral.ports}
     client.containers.run(

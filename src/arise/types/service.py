@@ -33,7 +33,7 @@ ServiceName = Literal[
   "arise-electrs",
   "arise-mainnet",
   "arise-mariadb",
-  "arise-mempool-backend",
+  "arise-mempool",
   "arise-mutiny-web",
   "arise-signet",
   "arise-testnet",

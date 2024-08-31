@@ -45,7 +45,7 @@ builds:
       1: VOLUME ["/var/lib/mysql"]
       2: EXPOSE 3306
       3: ENTRYPOINT ["docker-entrypoint.sh"]
-  arise-mempool-backend:
+  arise-mempool:
     instructions:
       0: FROM node:20.15.0-buster-slim AS builder
       1: ARG commitHash
@@ -174,7 +174,7 @@ services:
     ports:
       - 3306:3306
     type: middleware
-  arise-mempool-backend:
+  arise-mempool:
     command: {}
     env_vars:
       - DATABASE_DATABASE=arise
@@ -183,7 +183,7 @@ services:
       - DATABASE_USERNAME=arise
       - ELECTRUM_HOST=arise-electrs
       - ELECTRUM_PORT=50001
-    image: arise-mempool-backend
+    image: arise-mempool
     ports:
       - 8999:8999
     type: peripheral
