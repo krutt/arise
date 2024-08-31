@@ -15,6 +15,66 @@
 * pip
 * docker
 
+## Getting started
+
+You can use `arise` simply by installing via `pip` on your Terminal.
+
+```sh
+pip install arise
+```
+<details>
+<summary>Sample output when running install command</summary>
+
+```sh
+$ pip install arise
+> ...
+> Installing collected packages: arise
+> Successfully installed arise-0.1.6
+```
+
+</details>
+
+And build required images with `build` command. The following shows you how to build a `Testnet4`
+Bitcoin-Core node as well as [electrs](https://github.com/aekasitt/electrs),
+[mempool](https://github.com/mempool/mempool) and [mutiny-web](https://github.com/MutinyWallet/mutiny-web)
+
+```sh
+arise build --testnet4 --electrs --mempool --mutiny-web
+```
+
+<details>
+<summary>Sample output when running build command</summary>
+
+```sh
+$ arise build --testnet4 --electrs --mempool --mutiny-web
+> 
+```
+
+</details>
+
+The initial build may take some time as it is downloading source codes from different repositories
+and interfacing with `Docker Daemon` to build according to flagged requirements. Once the build process
+completes, you can begin deploying local network with peripherals as such:
+
+```sh
+arise deploy --testnet4 --with-electrs --with-mempool --with-mutiny-web
+```
+
+<details>
+<summary>Sample output when running deploy command</summary>
+
+```sh
+$ arise deploy
+> Deploy specified local cluster:            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:01
+> Generate addresses:                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+> Mine initial capital for parties:          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+```
+
+</details>
+
+You will have docker containers running in the backend, ready to be interfaced by your local
+environment applications you are developing.
+
 ## Contributions
 
 To be determined
