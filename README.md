@@ -1,6 +1,19 @@
 # Arise
 
+[![Bitcoin-only](https://img.shields.io/badge/bitcoin-only-FF9900?logo=bitcoin)](https://twentyone.world)
+[![Docker](https://img.shields.io/badge/docker-2496ED?&logo=docker&logoColor=white)](https://hub.docker.com)
+[![Top](https://img.shields.io/github/languages/top/krutt/arise)](https://github.com/krutt/arise)
+[![Languages](https://img.shields.io/github/languages/count/krutt/arise)](https://github.com/krutt/arise)
+[![Size](https://img.shields.io/github/repo-size/krutt/arise)](https://github.com/krutt/arise)
+[![Last commit](https://img.shields.io/github/last-commit/krutt/arise/master)](https://github.com/krutt/arise)
+
 [![Arise Banner](static/arise-banner.svg)](https://github.com/krutt/arise/blob/master/static/arise-banner.svg)
+
+## Prerequisites
+
+* python (3.8+)
+* pip
+* docker
 
 ## Contributions
 
