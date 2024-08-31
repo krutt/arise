@@ -115,6 +115,7 @@ def deploy(
   ]
   for name, peripheral in track(peripherals, f"Deploy peripheral services".ljust(42)):
     flags: List[str] = list(peripheral.command.values())
+    environment: List[str] = peripheral.env_vars
     if name == "arise-electrs":
       if daemon_name == "arise-mainnet":
         flags.append("--daemon-p2p-addr=arise-mainnet:8333")
@@ -130,13 +131,21 @@ def deploy(
         flags.append("--daemon-rpc-addr=arise-testnet4:48332")
       sleep(1)  # wait for authentication cookie to be generated
     elif name == "arise-mempool":
+      if daemon_name == "arise-mainnet":
+        environment += ["CORE_RPC_HOST=arise-mainnet", "CORE_RPC_PORT=8332"]
+      elif daemon_name == "arise-signet":
+        environment += ["CORE_RPC_HOST=arise-signet", "CORE_RPC_PORT=38332"]
+      elif daemon_name == "arise-testnet":
+        environment += ["CORE_RPC_HOST=arise-testnet", "CORE_RPC_PORT=18332"]
+      elif daemon_name == "arise-testnet4":
+        environment += ["CORE_RPC_HOST=arise-testnet4", "CORE_RPC_PORT=48332"]
       sleep(15)  # wait for arise-mariadb
     ports: Dict[str, int] = {p.split(":")[0]: int(p.split(":")[1]) for p in peripheral.ports}
     client.containers.run(
       peripheral.image,
       command=flags,
       detach=True,
-      environment=peripheral.env_vars,
+      environment=environment,
       name=name,
       network=NETWORK,
       ports=ports,  # type: ignore
