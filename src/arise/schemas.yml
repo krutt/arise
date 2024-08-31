@@ -27,13 +27,14 @@ builds:
       2: RUN apt-get install -y bsdmainutils build-essential cargo clang git
       3: WORKDIR /usr
       4: RUN git clone --depth 1 https://github.com/aekasitt/arise-electrs.git electrs
-      5: RUN cd electrs && cargo install --config net.git-fetch-with-cli=true --locked --path .
-      6: FROM debian:stable-slim AS runner
-      7: WORKDIR /usr/app
-      7: RUN apt-get update
-      8: RUN apt-get install -y librocksdb-dev
-      9: COPY --from=builder /root/.cargo/bin/electrs /usr/app/electrs
-      10: ENTRYPOINT ["/usr/app/electrs"]
+      5: RUN cd electrs && CARGO_UNSTABLE_SPARSE_REGISTRY=true cargo fetch --config net.git-fetch-with-cli=true
+      6: RUN cd electrs && CARGO_UNSTABLE_SPARSE_REGISTRY=true cargo install --locked --path .
+      7: FROM debian:stable-slim AS runner
+      8: WORKDIR /usr/app
+      8: RUN apt-get update
+      9: RUN apt-get install -y librocksdb-dev
+      10: COPY --from=builder /root/.cargo/bin/electrs /usr/app/electrs
+      11: ENTRYPOINT ["/usr/app/electrs"]
   arise-mainnet:
     instructions:
       <<: *baseInstructions
