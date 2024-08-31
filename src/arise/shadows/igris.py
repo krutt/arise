@@ -17,7 +17,6 @@ from re import search
 from typing import Any, Deque, Generator, Optional, Union
 
 ### Third-party packages ###
-from docker.errors import BuildError
 from rich.box import MINIMAL
 from rich.console import ConsoleRenderable, Group, RichCast
 from rich.progress import BarColumn, Progress, Task
