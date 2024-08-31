@@ -37,7 +37,6 @@ def dashboard() -> None:
     rich_print("[red bold]Unable to connect to daemon.")
     return
 
-  ### Retrieve bitcoind container ###
   daemon: Container
   try:
     daemon = next(
@@ -58,7 +57,7 @@ def dashboard() -> None:
   bellion: Bellion = Bellion(
     containers=arise_containers,
     container_index=0,
-    container_names=container_names,
+    container_names=[name for name in container_names if name is not None],
     daemon=daemon,
   )
   bellion.display()
