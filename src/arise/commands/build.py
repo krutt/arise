@@ -30,7 +30,7 @@ from arise.types import Build
 @option("--electrs", is_flag=True, help="Build arise-electrs image", type=bool)
 @option("--mainnet", is_flag=True, help="Build arise-mainnet image", type=bool)
 @option("--mariadb", is_flag=True, help="Build arise-mariadb image", type=bool)
-@option("--mempool", is_flag=True, help="Build arise-mempool-backend image", type=bool)
+@option("--mempool", is_flag=True, help="Build arise-mempool image", type=bool)
 @option("--mutiny-web", is_flag=True, help="Build arise-mutiny-web image", type=bool)
 @option("--signet", is_flag=True, help="Build arise-signet image", type=bool)
 @option("--testnet", is_flag=True, help="Build arise-testnet image", type=bool)
@@ -66,7 +66,7 @@ def build(
     "arise-electrs": electrs,
     "arise-mainnet": mainnet,
     "arise-mariadb": mariadb,
-    "arise-mempool-backend": mempool,
+    "arise-mempool": mempool,
     "arise-mutiny-web": mutiny_web,
     "arise-signet": signet,
     "arise-testnet": testnet,
