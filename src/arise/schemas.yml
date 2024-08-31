@@ -26,7 +26,7 @@ builds:
       1: RUN apt-get update
       2: RUN apt-get install -y bsdmainutils build-essential cargo clang git
       3: WORKDIR /usr
-      4: RUN git clone --depth 1 https://github.com/romanz/electrs.git
+      4: RUN git clone --depth 1 https://github.com/aekasitt/electrs.git
       5: RUN cd electrs && cargo install --config net.git-fetch-with-cli=true --locked --path .
       6: FROM debian:stable-slim AS runner
       7: WORKDIR /usr/app
