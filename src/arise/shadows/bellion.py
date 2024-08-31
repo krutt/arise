@@ -11,8 +11,8 @@
 # *************************************************************
 
 ### Standard packages ###
-from re import match
-from typing import ClassVar, List
+from re import Match, search
+from typing import ClassVar, List, Optional
 
 ### Third-party packages ###
 from blessed import Terminal
@@ -85,18 +85,22 @@ class Bellion(BaseModel):
           container_name: str = self.container_names[self.container_index]
           body_table: Table = Table(expand=True, show_lines=True)
           body_table.add_column(container_name, "dark_sea_green bold")
-          if match(r"arise-(mainnet|signet|testnet|testnet4)", container_name):
+          network: Optional[Match] = search(
+            r"(?<=arise)-(mainnet|signet|testnet|testnet4)", container_name
+          )
+          if network:
+            chain: str = network.group().replace("-mainnet", "")
             blockchain_info: BlockchainInfo = TypeAdapter(BlockchainInfo).validate_json(
               self.daemon.exec_run(
-                """
-                bitcoin-cli -testnet -rpcuser=arise -rpccookiefile=/home/bitcoin/.bitcoin/.cookie getblockchaininfo
+                f"""
+                bitcoin-cli {chain} -rpcuser=arise -rpccookiefile=/home/bitcoin/.bitcoin/.cookie getblockchaininfo
                 """
               ).output
             )
             mempool_info: MempoolInfo = TypeAdapter(MempoolInfo).validate_json(
               self.daemon.exec_run(
-                """
-                bitcoin-cli -testnet -rpcuser=arise -rpccookiefile=/home/bitcoin/.bitcoin/.cookie getmempoolinfo
+                f"""
+                bitcoin-cli {chain} -rpcuser=arise -rpccookiefile=/home/bitcoin/.bitcoin/.cookie getmempoolinfo
                 """
               ).output
             )
