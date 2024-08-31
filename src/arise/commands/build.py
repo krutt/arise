@@ -93,7 +93,7 @@ def build(
           try:
             igris.progress_build(  # type: ignore[misc]
               client.api.build(
-                decode=True, fileobj=fileobj, platform=build.platform, rm=True, tag=tag
+                decode=True, fileobj=fileobj, gzip=True, platform=build.platform, rm=True, tag=tag
               ),
               build_task_id,
             )
