@@ -25,12 +25,7 @@ pip install arise
 <details>
 <summary>Sample output when running install command</summary>
 
-```sh
-$ pip install arise
-❯ ...
-❯ Installing collected packages: arise
-❯ Successfully installed arise-0.1.6
-```
+![Sample Pip Install](https://github.com/krutt/arise/blob/master/static/pip-install.gif)
 
 </details>
 
@@ -45,25 +40,7 @@ arise build --testnet4 --electrs --mempool --mutiny-web
 <details>
 <summary>Sample output when running build command</summary>
 
-```sh
-$ arise build --testnet4 --electrs --mempool --mutiny-web
-❯
-❯ ---> c7c857e7f240
-❯  Step 13/13 : ENTRYPOINT ["/usr/app/electrs"]
-❯
-❯ ---> [Warning] The requested image's platform (linux/amd64) does not match the detected host
-❯ ---> Running in 6b6bb5257753
-❯ Removing intermediate container 6b6bb5257753
-❯ ---> 7c067a938f79
-❯ Successfully built 7c067a938f79
-❯ Successfully tagged arise-electrs:latest
-❯
-❯ Build specified images:                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-❯ Built <Image 'arise-testnet4'> successfully
-❯ Built <Image 'arise-electrs'> successfully
-❯ Built <Image 'arise-mempool'> successfully
-❯ Built <Image 'arise-mutiny-web'> successfully
-```
+![Sample Arise Build](https://github.com/krutt/arise/blob/master/static/arise-build.gif)
 
 </details>
 
@@ -78,17 +55,30 @@ arise deploy --testnet4 --with-electrs --with-mempool --with-mutiny-web
 <details>
 <summary>Sample output when running deploy command</summary>
 
-```sh
-$ arise deploy --signet --with-electrs --with-mempool --with-mutiny-web
-❯ Deploy arise-signet                        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
-❯ Deploy middleware services                 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
-❯ Deploy peripheral services                 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:16
-```
+![Sample Arise Deploy](https://github.com/krutt/arise/blob/master/static/arise-deploy.gif)
 
 </details>
 
 You will have docker containers running in the backend, ready to be interfaced by your local
 environment applications you are developing.
+
+## Dashboard
+
+Arise not only facilitates the deployment of intermingling [Bitcoin](https://twentyone.world) services
+but allows you to view Node's Blockchain Information, Mempool Information, Peripheral Details and etc.
+
+In order to view relevant metrics, launch the dashboard using the following command.
+
+```sh
+arise dashboard
+```
+
+<details>
+<summary>Sample output when running dashboard command</summary>
+
+![Sample Arise Dashboard](https://github.com/krutt/arise/blob/master/static/arise-dashboard.gif)
+
+</details>
 
 ## Contributions
 
