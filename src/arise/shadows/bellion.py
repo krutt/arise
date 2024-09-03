@@ -27,7 +27,7 @@ from rich.text import Text
 
 ### Local modules ###
 from arise.shadows.tusk import Tusk
-from arise.types import BlockchainInfo, MempoolInfo
+from arise.types import BlockchainInfo, DifficultyAdjustment, MempoolInfo
 
 
 class Bellion(BaseModel):
@@ -140,6 +140,41 @@ class Bellion(BaseModel):
                 "\n",
               )
             )
+          elif container_name == "arise-mempool":
+            difficulty_adjustment: DifficultyAdjustment = TypeAdapter(
+              DifficultyAdjustment
+            ).validate_json(
+              self.containers[self.container_index]
+              .exec_run(
+                """
+                curl -sSL localhost:8999/api/v1/difficulty-adjustment
+                """
+              )
+              .output
+            )
+            body_table.add_row(
+              Text.assemble(
+                "\n",
+                ("Difficulty Adjustment", "bold"),
+                "\n".ljust(15),
+                ("Adjusted Time Average:".ljust(24), "green bold"),
+                f"{difficulty_adjustment.adjusted_time_average}".rjust(16),
+                "\n".ljust(15),
+                ("Remaining Blocks:".ljust(24), "cyan bold"),
+                f"{difficulty_adjustment.remaining_blocks}".rjust(16),
+                "\n".ljust(15),
+                ("Remaining Time:".ljust(24), "blue bold"),
+                f"{difficulty_adjustment.remaining_time}".rjust(16),
+                "\n".ljust(15),
+                ("Next Retarget Height:".ljust(24), "bright_magenta bold"),
+                f"{difficulty_adjustment.next_retarget_height}".rjust(16),
+                "\n".ljust(15),
+                ("Estimated Retarget Date:".ljust(24), "light_coral bold"),
+                f"{difficulty_adjustment.estimated_retarget_date}".rjust(16),
+                "\n",
+              )
+            )
+
           else:
             body_table.add_row(self.tusk.renderable)
           self.pane["body"].update(body_table)
