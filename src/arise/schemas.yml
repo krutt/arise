@@ -184,6 +184,7 @@ services:
     env_vars:
       - CORE_RPC_COOKIE=true
       - CORE_RPC_COOKIE_PATH=/home/bitcoin/.bitcoin/.cookie
+      - CORE_RPC_USERNAME=arise
       - DATABASE_DATABASE=arise
       - DATABASE_HOST=arise-mariadb
       - DATABASE_PASSWORD=arise
