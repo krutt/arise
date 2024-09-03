@@ -182,6 +182,7 @@ services:
   arise-mempool:
     command: {}
     env_vars:
+      - CORE_RPC_COOKIE=true
       - CORE_RPC_COOKIE_PATH=/home/bitcoin/.bitcoin/.cookie
       - DATABASE_DATABASE=arise
       - DATABASE_HOST=arise-mariadb
