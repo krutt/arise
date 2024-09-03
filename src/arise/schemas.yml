@@ -67,13 +67,15 @@ builds:
       15: RUN cd build && npm install --omit=dev --omit=optional
       16: RUN cd build && npm run package
       17: FROM node:20.15.0-buster-slim AS runner
-      18: WORKDIR /usr/app
-      19: COPY --from=builder /usr/src/build/package /usr/app/package
-      20: COPY --from=builder /usr/src/mempool-config.json /usr/app/mempool-config.json
-      21: COPY --from=builder /usr/src/start.sh /usr/app/start.sh
-      22: COPY --from=builder /usr/src/wait-for-it.sh /usr/app/wait-for-it.sh
-      23: RUN sed -i 's#/backend/package/index.js#\/usr\/app\/package\/index.js#' /usr/app/start.sh
-      24: ENTRYPOINT ["/usr/app/start.sh"]
+      18: RUN apt-get update
+      19: RUN apt-get install -y curl
+      20: WORKDIR /usr/app
+      21: COPY --from=builder /usr/src/build/package /usr/app/package
+      22: COPY --from=builder /usr/src/mempool-config.json /usr/app/mempool-config.json
+      23: COPY --from=builder /usr/src/start.sh /usr/app/start.sh
+      24: COPY --from=builder /usr/src/wait-for-it.sh /usr/app/wait-for-it.sh
+      25: RUN sed -i 's#/backend/package/index.js#\/usr\/app\/package\/index.js#' /usr/app/start.sh
+      26: ENTRYPOINT ["/usr/app/start.sh"]
   arise-mutiny-web:
     instructions:
       0: FROM node:20-slim AS builder
