@@ -84,6 +84,12 @@ arise dashboard
 
 To be determined
 
+## Attributions
+
+1. [ปฐวี - Patavi](https://www.f0nt.com/release/sov-patavi) font by [uvSOV - Worawut Thanawatanawanich](fb.com/worawut.thanawatanawanich)
+2. [Florent Galon](https://flo.rent) for flame animation used as Tusk's HellFire.
+3. [Avinash Vytla](https://github.com/SnippetsDevelop) for breaking down Florent's process on [YouTube](https://youtu.be/RP_x_F7m1UI)
+
 ### Known issues
 
 You may run into this setback when first running this project. This is a
