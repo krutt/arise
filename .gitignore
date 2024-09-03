@@ -8,6 +8,10 @@ __pycache__/
 *.so
 
 
+### Chaindata ###
+.bitcoin
+
+
 ### Distribution / packaging ###
 .Python
 build/
@@ -55,4 +59,3 @@ dmypy.json
 ### Workspace settings ###
 .idea
 .vscode
-
