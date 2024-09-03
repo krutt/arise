@@ -118,17 +118,21 @@ def deploy(
     environment: List[str] = peripheral.env_vars
     if name == "arise-electrs":
       if daemon_name == "arise-mainnet":
+        flags.append("--cookie-file=/home/bitcoin/.bitcoin/.cookie")
         flags.append("--daemon-p2p-addr=arise-mainnet:8333")
         flags.append("--daemon-rpc-addr=arise-mainnet:8332")
       elif daemon_name == "arise-signet":
+        flags.append("--cookie-file=/home/bitcoin/.bitcoin/.cookie")
         flags.append("--daemon-p2p-addr=arise-signet:38333")
         flags.append("--daemon-rpc-addr=arise-signet:38332")
         flags.append("--network=signet")
       elif daemon_name == "arise-testnet":
+        flags.append("--cookie-file=/home/bitcoin/.bitcoin/.cookie")
         flags.append("--daemon-p2p-addr=arise-testnet:18333")
         flags.append("--daemon-rpc-addr=arise-testnet:18332")
         flags.append("--network=testnet")
       elif daemon_name == "arise-testnet4":
+        flags.append("--cookie-file=/home/bitcoin/.bitcoin/.cookie")
         flags.append("--daemon-p2p-addr=arise-testnet4:48333")
         flags.append("--daemon-rpc-addr=arise-testnet4:48332")
         flags.append("--network=testnet")
