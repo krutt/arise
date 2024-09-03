@@ -123,12 +123,15 @@ def deploy(
       elif daemon_name == "arise-signet":
         flags.append("--daemon-p2p-addr=arise-signet:38333")
         flags.append("--daemon-rpc-addr=arise-signet:38332")
+        flags.append("--network=signet")
       elif daemon_name == "arise-testnet":
         flags.append("--daemon-p2p-addr=arise-testnet:18333")
         flags.append("--daemon-rpc-addr=arise-testnet:18332")
+        flags.append("--network=testnet")
       elif daemon_name == "arise-testnet4":
         flags.append("--daemon-p2p-addr=arise-testnet4:48333")
         flags.append("--daemon-rpc-addr=arise-testnet4:48332")
+        flags.append("--network=testnet")
       sleep(1)  # wait for authentication cookie to be generated
     elif name == "arise-mempool":
       if daemon_name == "arise-mainnet":
