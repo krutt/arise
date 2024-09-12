@@ -2,7 +2,7 @@
 # coding:utf-8
 # Copyright (C) 2024 All rights reserved.
 # FILENAME:    ~~/src/arise/types/difficulty_adjustment.py
-# VERSION:     0.2.0
+# VERSION:     0.2.1
 # CREATED:     2024-09-04 00:56
 # AUTHOR:      Sitt Guruvanich <aekasitt.g+github@siamintech.co.th>
 # DESCRIPTION:
