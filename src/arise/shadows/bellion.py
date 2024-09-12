@@ -11,8 +11,9 @@
 # *************************************************************
 
 ### Standard packages ###
-from re import Match, search
+from re import Match, match, search
 from typing import ClassVar, List, Optional
+from webbrowser import open_new
 
 ### Third-party packages ###
 from blessed import Terminal
@@ -81,8 +82,12 @@ class Bellion(BaseModel):
           if self.container_index < len(self.container_names) - 1:
             container_rows += "\n".join(self.container_names[self.container_index + 1 :])
           self.pane["domains"].update(Panel(container_rows, title="domains"))
-
           container_name: str = self.container_names[self.container_index]
+
+          ### Open new tab ####
+          if keystroke in {"O", "o"} and match(r"arise-mutiny-web", container_name):
+            open_new("http://localhost:8000")
+
           body_table: Table = Table(expand=True, show_lines=True)
           body_table.add_column(container_name, "dark_sea_green bold")
           network: Optional[Match] = search(
@@ -174,21 +179,48 @@ class Bellion(BaseModel):
                 "\n",
               )
             )
-
-          else:
-            body_table.add_row(self.tusk.renderable)
-          self.pane["body"].update(body_table)
-          self.pane["footer"].update(
-            Panel(
-              Text.assemble(
-                "Select:".rjust(16),
-                (" ↑↓ ", "bright_magenta bold"),
-                " " * 20,
-                "Exit:".rjust(16),
-                ("  Q ", "red bold"),
+            self.pane["footer"].update(
+              Panel(
+                Text.assemble(
+                  "Select:".rjust(16),
+                  (" ↑↓ ", "bright_magenta bold"),
+                  " " * 20,
+                  "Exit:".rjust(16),
+                  ("  Q ", "red bold"),
+                )
               )
             )
-          )
+          elif container_name == "arise-mutiny-web":
+            body_table.add_row(self.tusk.renderable)
+            self.pane["footer"].update(
+              Panel(
+                Text.assemble(
+                  "Select:".rjust(10),
+                  (" ↑↓ ", "bright_magenta bold"),
+                  " " * 8,
+                  "Open:".rjust(10),
+                  ("  O ", "cyan"),
+                  " " * 8,
+                  "Exit:".rjust(10),
+                  ("  Q ", "red bold"),
+                )
+              )
+            )
+          else:
+            body_table.add_row(self.tusk.renderable)
+            self.pane["footer"].update(
+              Panel(
+                Text.assemble(
+                  "Select:".rjust(16),
+                  (" ↑↓ ", "bright_magenta bold"),
+                  " " * 20,
+                  "Exit:".rjust(16),
+                  ("  Q ", "red bold"),
+                )
+              )
+            )
+          self.pane["body"].update(body_table)
+
       except StopIteration:
         print("Glory to Ashborn!")
 
