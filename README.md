@@ -86,9 +86,10 @@ To be determined
 
 ## Attributions
 
-1. [ปฐวี - Patavi](https://www.f0nt.com/release/sov-patavi) font by [uvSOV - Worawut Thanawatanawanich](fb.com/worawut.thanawatanawanich)
-2. [Florent Galon](https://flo.rent) for flame animation used as Tusk's HellFire.
-3. [Avinash Vytla](https://github.com/SnippetsDevelop) for breaking down Florent's process on [YouTube](https://youtu.be/RP_x_F7m1UI)
+1. [Dutch Golden Age Prints and Paintings](https://picryl.com/media/soldaat-die-zijn-roer-met-beide-handen-rechtop-voor-zich-vasthoudt-nr-20-ca-1c5eb2) - Rijksmuseum, Public Domain Marked.
+2. [ปฐวี - Patavi](https://www.f0nt.com/release/sov-patavi) font by [uvSOV - Worawut Thanawatanawanich](fb.com/worawut.thanawatanawanich)
+3. [Florent Galon](https://flo.rent) for flame animation used as Tusk's HellFire.
+4. [Avinash Vytla](https://github.com/SnippetsDevelop) for breaking down Florent's process on [YouTube](https://youtu.be/RP_x_F7m1UI)
 
 ### Known issues
 
