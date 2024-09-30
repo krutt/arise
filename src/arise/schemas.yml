@@ -114,15 +114,6 @@ builds:
       <<: *baseInstructions
       19: EXPOSE 18332 18333
       20: ENTRYPOINT ["/usr/app/bitcoind"]
-  arise-testnet4:
-    instructions:
-      <<: *baseInstructions
-      2: RUN apt-get install -y autoconf bsdmainutils build-essential ccache g++ gcc git libboost-all-dev libtool pkg-config
-      6: RUN cd bitcoin && git fetch origin pull/29775/head:pr-29775 && git checkout pr-29775
-      7: RUN cd bitcoin && sed -i 's#return "testnet4";#return "test";#' src/util/chaintype.cpp && sed -i 's#return ChainType::TESTNET;#return ChainType::TESTNET4;#' src/util/chaintype.cpp && sed -i 's#BOOST_CHECK_EQUAL(test_args.GetChainTypeString(), "testnet4");#BOOST_CHECK_EQUAL(test_args.GetChainTypeString(), "test");#' src/test/argsman_tests.cpp && sed -i 's#return CChainParams::Testnet();#return CChainParams::Testnet4();#' src/chainparams.cpp
-      8: RUN cd bitcoin && ./autogen.sh && ./configure --with-incompatible-bdb CC=gcc CXX=g++
-      19: EXPOSE 48332 48333
-      20: ENTRYPOINT ["/usr/app/bitcoind"]
 network: arise
 services:
   arise-bitcoind:
@@ -225,15 +216,4 @@ services:
     ports:
       - 18332:18332
       - 18333:18333
-    type: node
-  arise-testnet4:
-    command:
-      <<: *baseCommand
-      15: -port=48333
-      16: -rpcport=48332
-      17: -testnet4
-    image: arise-testnet4
-    ports:
-      - 48332:48332
-      - 48333:48333
     type: node

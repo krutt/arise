@@ -27,10 +27,9 @@ from arise.types import Chain, Service, ServiceName
 
 
 @command
-@option("--mainnet", cls=Chain, is_flag=True, type=bool, variants=("signet", "testnet", "testnet4"))
-@option("--signet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "testnet", "testnet4"))
-@option("--testnet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "signet", "testnet4"))
-@option("--testnet4", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "signet", "testnet"))
+@option("--mainnet", cls=Chain, is_flag=True, type=bool, variants=("signet", "testnet"))
+@option("--signet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "testnet"))
+@option("--testnet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "signet"))
 @option("--with-electrs", is_flag=True, type=bool)
 @option("--with-mempool", is_flag=True, type=bool)
 @option("--with-mutiny-web", is_flag=True, type=bool)
@@ -38,7 +37,6 @@ def deploy(
   mainnet: bool,
   signet: bool,
   testnet: bool,
-  testnet4: bool,
   with_electrs: bool,
   with_mempool: bool,
   with_mutiny_web: bool,
@@ -57,7 +55,6 @@ def deploy(
     "arise-mainnet": mainnet,
     "arise-signet": signet,
     "arise-testnet": testnet,
-    "arise-testnet4": testnet4,
   }
   daemon_name: ServiceName = "arise-mainnet"
   try:
@@ -131,11 +128,6 @@ def deploy(
         flags.append("--daemon-p2p-addr=arise-testnet:18333")
         flags.append("--daemon-rpc-addr=arise-testnet:18332")
         flags.append("--network=testnet")
-      elif daemon_name == "arise-testnet4":
-        flags.append("--cookie-file=/home/bitcoin/.bitcoin/.cookie")
-        flags.append("--daemon-p2p-addr=arise-testnet4:48333")
-        flags.append("--daemon-rpc-addr=arise-testnet4:48332")
-        flags.append("--network=testnet")
       sleep(1)  # wait for authentication cookie to be generated
     elif name == "arise-mempool":
       if daemon_name == "arise-mainnet":
@@ -144,8 +136,6 @@ def deploy(
         environment += ["CORE_RPC_HOST=arise-signet", "CORE_RPC_PORT=38332"]
       elif daemon_name == "arise-testnet":
         environment += ["CORE_RPC_HOST=arise-testnet", "CORE_RPC_PORT=18332"]
-      elif daemon_name == "arise-testnet4":
-        environment += ["CORE_RPC_HOST=arise-testnet4", "CORE_RPC_PORT=48332"]
       sleep(15)  # wait for arise-mariadb
     ports: Dict[str, int] = {p.split(":")[0]: int(p.split(":")[1]) for p in peripheral.ports}
     client.containers.run(

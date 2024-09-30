@@ -41,7 +41,7 @@ def dashboard() -> None:
   try:
     daemon = next(
       filter(
-        lambda container: match(r"arise-(mainnet|signet|testnet|testnet4)", container.name),
+        lambda container: match(r"arise-(mainnet|signet|testnet)", container.name),
         reversed(client.containers.list()),
       )
     )

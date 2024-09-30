@@ -30,7 +30,6 @@ BuildEnum = Literal[
   "arise-mutiny-web",
   "arise-signet",
   "arise-testnet",
-  "arise-testnet4",
 ]
 
 

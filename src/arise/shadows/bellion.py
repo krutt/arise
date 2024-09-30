@@ -91,7 +91,7 @@ class Bellion(BaseModel):
           body_table: Table = Table(expand=True, show_lines=True)
           body_table.add_column(container_name, "dark_sea_green bold")
           network: Optional[Match] = search(
-            r"(?<=arise)-(mainnet|signet|testnet|testnet4)", container_name
+            r"(?<=arise)-(mainnet|signet|testnet)", container_name
           )
           if network:
             chain: str = network.group().replace("-mainnet", "")

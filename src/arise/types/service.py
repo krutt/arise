@@ -37,7 +37,6 @@ ServiceName = Literal[
   "arise-mutiny-web",
   "arise-signet",
   "arise-testnet",
-  "arise-testnet4",
 ]
 
 __all__ = ("PortMapping", "Service", "ServiceName")

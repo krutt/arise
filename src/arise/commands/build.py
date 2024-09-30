@@ -34,7 +34,6 @@ from arise.types import Build
 @option("--mutiny-web", is_flag=True, help="Build arise-mutiny-web image", type=bool)
 @option("--signet", is_flag=True, help="Build arise-signet image", type=bool)
 @option("--testnet", is_flag=True, help="Build arise-testnet image", type=bool)
-@option("--testnet4", is_flag=True, help="Build arise-testnet4 image", type=bool)
 def build(
   electrs: bool,
   mainnet: bool,
@@ -43,7 +42,6 @@ def build(
   mutiny_web: bool,
   signet: bool,
   testnet: bool,
-  testnet4: bool,
 ) -> None:
   """Build peripheral images for the desired cluster."""
   client: DockerClient
@@ -70,7 +68,6 @@ def build(
     "arise-mutiny-web": mutiny_web,
     "arise-signet": signet,
     "arise-testnet": testnet,
-    "arise-testnet4": testnet4,
   }
 
   ### Checks if specified images had been built previously ###
