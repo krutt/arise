@@ -14,7 +14,7 @@
 from click import group
 
 ### Local modules ###
-from arise.commands import build, clean, dashboard, deploy
+from arise.commands import auth, build, clean, dashboard, deploy, pull
 
 
 @group
@@ -22,10 +22,12 @@ def cli() -> None:
   """arise"""
 
 
+cli.add_command(auth, "auth")
 cli.add_command(build, "build")
 cli.add_command(clean, "clean")
 cli.add_command(dashboard, "dashboard")
 cli.add_command(deploy, "deploy")
+cli.add_command(pull, "pull")
 
 
 if __name__ == "__main__":
