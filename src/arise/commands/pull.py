@@ -22,6 +22,7 @@ from rich import print as rich_print
 ### Local modules ###
 from arise.configs import BUILDS
 
+
 @command
 @option("--electrs", is_flag=True, help="Build arise-electrs image", type=bool)
 @option("--mainnet", is_flag=True, help="Build arise-mainnet image", type=bool)
