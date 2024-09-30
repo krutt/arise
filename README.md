@@ -13,6 +13,7 @@
 
 * python (3.8+)
 * pip
+* uv
 * docker
 
 ## Getting started
