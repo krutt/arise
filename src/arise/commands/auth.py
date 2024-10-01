@@ -28,7 +28,7 @@ from rich import print as rich_print
 @option("--fish", is_flag=True, help="Persist authentications in .fishrc", type=bool)
 @option("--zsh", is_flag=True, help="Persist authentications in .zshrc", type=bool)
 def auth(bash: bool, fish: bool, rpcuser: str, zsh: bool) -> None:
-  """Persist authentications in desired run-control file or currently active shell's run-control"""
+  """Persist authentications in desired run-control file."""
   client: DockerClient
   try:
     client = from_env()

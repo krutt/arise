@@ -9,13 +9,6 @@
 
 [![Arise Banner](static/arise-banner.svg)](https://github.com/krutt/arise/blob/master/static/arise-banner.svg)
 
-## Prerequisites
-
-* python (3.8+)
-* pip
-* uv
-* docker
-
 ## Getting started
 
 You can use `arise` simply by installing via `pip` on your Terminal.
@@ -24,22 +17,22 @@ You can use `arise` simply by installing via `pip` on your Terminal.
 pip install arise
 ```
 <details>
-<summary>Sample output when running install command</summary>
+  <summary> Sample output when running install command </summary>
 
 ![Sample Pip Install](https://github.com/krutt/arise/blob/master/static/pip-install.gif)
 
 </details>
 
-And build required images with `build` command. The following shows you how to build a `Testnet4`
+And build required images with `build` command. The following shows you how to build a `Testnet`
 Bitcoin-Core node as well as [electrs](https://github.com/aekasitt/electrs),
 [mempool](https://github.com/mempool/mempool) and [mutiny-web](https://github.com/MutinyWallet/mutiny-web)
 
 ```sh
-arise build --testnet4 --electrs --mempool --mutiny-web
+arise build --testnet --electrs --mempool --mutiny-web
 ```
 
 <details>
-<summary>Sample output when running build command</summary>
+  <summary> Sample output when running build command </summary>
 
 ![Sample Arise Build](https://github.com/krutt/arise/blob/master/static/arise-build.gif)
 
@@ -50,13 +43,14 @@ and interfacing with `Docker Daemon` to build according to flagged requirements.
 completes, you can begin deploying local network with peripherals as such:
 
 ```sh
-arise deploy --testnet4 --with-electrs --with-mempool --with-mutiny-web
+arise deploy --testnet --with-electrs --with-mempool --with-mutiny-web
 ```
 
 <details>
 <summary>Sample output when running deploy command</summary>
 
 ![Sample Arise Deploy](https://github.com/krutt/arise/blob/master/static/arise-deploy.gif)
+
 
 </details>
 
@@ -75,15 +69,101 @@ arise dashboard
 ```
 
 <details>
-<summary>Sample output when running dashboard command</summary>
+  <summary> Sample output when running dashboard command </summary>
 
 ![Sample Arise Dashboard](https://github.com/krutt/arise/blob/master/static/arise-dashboard.gif)
-
 </details>
 
 ## Contributions
 
-To be determined
+### Prerequisites
+
+* [python](https://www.python.org) version 3.8 and above
+* [uv](https://docs.astral.sh/uv)
+* [docker](https://www.docker.com)
+
+### Set up local environment
+
+The following guide walks through setting up your local working environment using `pyenv`
+as Python version manager and `uv` as Python package manager. If you do not have `pyenv`
+installed, run the following command.
+
+<details>
+  <summary> Install using Homebrew (Darwin) </summary>
+  
+  ```sh
+  brew install pyenv --head
+  ```
+</details>
+
+<details>
+  <summary> Install using standalone installer (Darwin and Linux) </summary>
+  
+  ```sh
+  curl https://pyenv.run | bash
+  ```
+</details>
+
+If you do not have `uv` installed, run the following command.
+
+<details>
+  <summary> Install using Homebrew (Darwin) </summary>
+
+  ```sh
+  brew install uv
+  ```
+</details>
+
+<details>
+  <summary> Install using standalone installer (Darwin and Linux) </summary>
+
+  ```sh
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
+</details>
+
+
+Once you have `pyenv` Python version manager installed, you can
+install any version of Python above version 3.8 for this project.
+The following commands help you set up and activate a Python virtual
+environment where `uv` can download project dependencies from the `PyPI`
+open-sourced registry defined under `pyproject.toml` file.
+
+<details>
+  <summary> Set up environment and synchronize project dependencies </summary>
+
+  ```sh
+  pyenv shell 3.11.9
+  uv venv  --python-preference system
+  source .venv/bin/activate
+  uv sync --dev
+  ```
+</details>
+
+Now you have the entire project set-up and ready to be tinkered with. Try out the
+standard `arise` command which brings up a help menu.
+
+<details>
+  <summary> Launch Arise Help </summary>
+
+  ```sh
+  $ arise
+  >  Usage: arise [OPTIONS] COMMAND [ARGS]...
+  > 
+  >   arise
+  > 
+  > Options:
+  >   --help  Show this message and exit.
+  > 
+  > Commands:
+  >   auth       Persist authentications in desired run-control file.
+  >   build      Build peripheral images for the desired cluster.
+  >   clean      Remove all active "arise-*" containers, drop network.
+  >   dashboard  Dashboard for checking current state of images deployed.
+  >   deploy     Deploy cluster.
+  >   pull       Pull core and peripheral images from GitHub container registry
+  ```
+</details>
 
 ## Attributions
 
