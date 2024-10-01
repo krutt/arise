@@ -128,7 +128,7 @@ services:
       7: -rpcbind=0.0.0.0
       8: -rpccookiefile=/home/bitcoin/.bitcoin/.cookie
       9: -rpcservertimeout=120
-      10: -rpcuser=arise
+      10: -rpcuser=${ARISE_AUTH_RPCUSER}
       11: -rpcworkqueue=128
       12: -server=1
       13: -txindex=1

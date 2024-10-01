@@ -53,7 +53,7 @@ def auth(bash: bool, fish: bool, rpcuser: str, zsh: bool) -> None:
       found: List[str] = findall(r"export ARISE_AUTH_RPCUSER=", rc_readonly.read())
       authenticated = len(found) != 0
   if authenticated:
-    print("Already authenticated!")
+    rich_print("[yellow]Already authenticated![reset]")
     return
   if rpcuser is not None:
     with open(path.expanduser(rc_path), "a") as rc_output:
