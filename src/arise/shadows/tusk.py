@@ -2,7 +2,7 @@
 # coding:utf-8
 # Copyright (C) 2024 All rights reserved.
 # FILENAME:    ~~/src/florent/views/flame.py
-# VERSION:     0.2.1
+# VERSION:     0.2.2
 # CREATED:     2024-08-30 20:16
 # AUTHOR:      Sitt Guruvanich <aekazitt+github@gmail.com>
 # DESCRIPTION:
