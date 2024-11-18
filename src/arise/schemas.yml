@@ -26,7 +26,7 @@ builds:
       1: RUN apt-get update
       2: RUN apt-get install -y bsdmainutils build-essential cargo clang git lld
       3: WORKDIR /usr/src
-      4: RUN git clone --depth 1 https://github.com/aekasitt/arise-electrs.git electrs
+      4: RUN git clone --depth 1 https://github.com/romanz/electrs.git
       5: ENV RUSTFLAGS="-C link-args=-fuse-ld=lld"
       6: RUN cd electrs && cargo fetch --config net.git-fetch-with-cli=true -Z sparse-registry
       7: RUN cd electrs && cargo install --locked --path . -Z sparse-registry
