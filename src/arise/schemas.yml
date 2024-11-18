@@ -128,7 +128,7 @@ services:
       7: -rpcbind=0.0.0.0
       8: -rpccookiefile=/home/bitcoin/.bitcoin/.cookie
       9: -rpcservertimeout=120
-      10: -rpcuser=${ARISE_AUTH_RPCUSER}
+      10: -rpcuser=${ARISE_AUTH_RPCUSER:-"arise"}
       11: -rpcworkqueue=128
       12: -server=1
       13: -txindex=1
@@ -164,8 +164,8 @@ services:
     env_vars:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
       - MYSQL_DATABASE=arise
-      - MYSQL_PASSWORD=arise
-      - MYSQL_USER=arise
+      - MYSQL_PASSWORD=${ARISE_AUTH_DBPASS:-"arise"}
+      - MYSQL_USER=${ARISE_AUTH_DBUSER:-"arise"}
     image: arise-mariadb
     ports:
       - 3306:3306
@@ -175,11 +175,11 @@ services:
     env_vars:
       - CORE_RPC_COOKIE=true
       - CORE_RPC_COOKIE_PATH=/home/bitcoin/.bitcoin/.cookie
-      - CORE_RPC_USERNAME=arise
+      - CORE_RPC_USERNAME=${ARISE_AUTH_RPCUSER:-"arise"}
       - DATABASE_DATABASE=arise
       - DATABASE_HOST=arise-mariadb
-      - DATABASE_PASSWORD=arise
-      - DATABASE_USERNAME=arise
+      - DATABASE_PASSWORD=${ARISE_AUTH_DBPASS:-"arise"}
+      - DATABASE_USERNAME=${ARISE_AUTH_DBUSER:-"arise"}
       - ELECTRUM_HOST=arise-electrs
       - ELECTRUM_PORT=50001
     image: arise-mempool
