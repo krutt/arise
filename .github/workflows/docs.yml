@@ -11,7 +11,7 @@ jobs:
       - run: export UV_LINK_MODE=copy
       - run: uv sync --dev --python-preference system
       - run: source .venv/bin/activate
-      - run: pdoc src/**/*.py --output docs/
+      - run: python -m pdoc src/**/*.py --output docs/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/
