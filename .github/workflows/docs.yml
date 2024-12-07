@@ -14,7 +14,7 @@ jobs:
       - name: Load development dependencies
         run: uv sync --dev
       - name: Generate documentation
-      - run: pdoc src/**/*.py --output docs/
+        run: pdoc src/**/*.py --output docs/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/
