@@ -2,16 +2,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-      - run: curl -LsSf https://astral.sh/uv/install.sh | sh
-      - run: export PATH="/home/runner/.local/bin/:$PATH"
-      - run: export UV_LINK_MODE=copy
-      - run: uv sync --dev --python-preference system
-      - run: source .venv/bin/activate
-      - run: python -m pdoc src/**/*.py --output docs/
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+      - name: Set up Python
+        run: uv python install 3.11
+      - name: Set up Virtual Environment
+        run: uv venv
+        run: source .venv/bin/activate
+      - name: Load development dependencies
+        run: uv sync --dev
+      - name: Generate documentation
+      - run: pdoc src/**/*.py --output docs/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/
