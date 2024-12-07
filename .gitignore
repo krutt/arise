@@ -52,6 +52,10 @@ pypi-token.pypi
 dmypy.json
 
 
+### Pdoc ###
+docs/
+
+
 ### Ruff ###
 .ruff_cache
 

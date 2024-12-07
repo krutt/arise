@@ -1,0 +1,38 @@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      - run: export PATH="/root/.local/bin/:$PATH"
+      - run: export UV_LINK_MODE=copy
+      - run: pdoc src/**/*.py --output docs/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+name: Convert docstrings to Pdoc pages
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read
