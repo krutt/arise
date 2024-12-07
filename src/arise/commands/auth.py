@@ -67,7 +67,7 @@ def auth(
         write_count += 1
   if write_count > 0:
     outputs.append("[green]Success!")
-    outputs.append(f"In order to activate authentication, run the following command:")
+    outputs.append("In order to activate authentication, run the following command:")
     outputs.append(f"    [blue]source { path.expanduser(rc_path) }[reset]")
   list(map(rich_print, outputs))
 

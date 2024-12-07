@@ -87,7 +87,7 @@ def deploy(
     for key, value in SERVICES.items()
     if value.service_type == "middleware" and middleware_select[key]
   ]
-  for name, middleware in track(middlewares, f"Deploy middleware services".ljust(42)):
+  for name, middleware in track(middlewares, "Deploy middleware services".ljust(42)):
     flags: List[str] = list(middleware.command.values())
     ports: Dict[str, int] = {p.split(":")[0]: int(p.split(":")[1]) for p in middleware.ports}
     client.containers.run(
@@ -110,7 +110,7 @@ def deploy(
     for key, value in SERVICES.items()
     if value.service_type == "peripheral" and peripheral_select[key]
   ]
-  for name, peripheral in track(peripherals, f"Deploy peripheral services".ljust(42)):
+  for name, peripheral in track(peripherals, "Deploy peripheral services".ljust(42)):
     flags: List[str] = list(peripheral.command.values())
     environment: List[str] = peripheral.env_vars
     if name == "arise-electrs":
