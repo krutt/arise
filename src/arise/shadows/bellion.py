@@ -56,8 +56,10 @@ class Bellion(BaseModel):
     self.sidebar.split_column(self.domains)
 
   def display(self) -> None:
-    with self.terminal.cbreak(), self.terminal.hidden_cursor(), Live(
-      self.pane, refresh_per_second=4, transient=True
+    with (
+      self.terminal.cbreak(),
+      self.terminal.hidden_cursor(),
+      Live(self.pane, refresh_per_second=4, transient=True),
     ):
       try:
         while True:
