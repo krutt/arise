@@ -1,18 +1,18 @@
-### Byte-compiled ###
+### byte-compiled ###
 __pycache__/
 *.py[cod]
 *$py.class
 
 
-### C extensions ###
+### c extensions ###
 *.so
 
 
-### Chaindata ###
+### chaindata ###
 .bitcoin
 
 
-### Distribution / packaging ###
+### distribution / packaging ###
 .Python
 build/
 develop-eggs/
@@ -32,35 +32,43 @@ share/python-wheels/
 *.egg
 
 
-### Environments ###
+### environment variables ###
 .env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-pypi-token.pypi
 
-### Mac OSX finder indexer ###
+
+### virtual environments ###
+.venv
+venv/
+venv.bak/
+
+
+### osx finder indexer ###
 **/.DS_Store
 
 
-### Mypy ###
+### mypy ###
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
 
-### Pdoc ###
+### pdoc ###
 docs/
 
 
-### Ruff ###
+### pyenv / uv ###
+.python-version
+
+
+### ruff ###
 .ruff_cache
 
 
-### Workspace settings ###
+### security token ###
+pypi-token.pypi
+
+
+### workspace settings ###
 .idea
 .ignore
 .vscode
