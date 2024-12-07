@@ -166,6 +166,23 @@ standard `arise` command which brings up a help menu.
   ```
 </details>
 
+## Change-logs
+
+* **0.1.0** Cloned useful and useless things from [aesir](https://github.com/krutt/aesir)
+* **0.1.1** Remove visual janks from progress bars
+* **0.1.2** Establish new yaml formats and typings
+* **0.1.3** Attempt to make `-testnet4` flag work on bitcoin daemon
+* **0.1.4** Experiment with c compilers for faster build-times
+* **0.1.5** Add peripheral images `arise-elctrs`, `arise-mempoopl` and `arise-mutiny-wallet`
+* **0.1.6** Pretend launching electrs on `testnet4` is easy by using custom `electrs` repository
+* **0.1.7** Separate middleware deployment and add delay for `postgres` setup time
+* **0.1.8** Experiment with cookie authentications between peripheral images
+* **0.1.9** Enable intranet between containers and authenticate using cookie
+* **0.2.0** Attribute animation tutoral and typeface in README markdown
+* **0.2.1** Drop `testnet4` hacky implementation and custom `electrs` repository; Not worth it.
+* **0.2.2** Attribute public domain art, persist authentications, drop `poetry` and use `uv`
+* **0.2.3** Use GitHub workflows to setup GitHub Pages application for documentation
+
 ## Attributions
 
 1. [Dutch Golden Age Prints and Paintings](https://picryl.com/media/soldaat-die-zijn-roer-met-beide-handen-rechtop-voor-zich-vasthoudt-nr-20-ca-1c5eb2) - Rijksmuseum, Public Domain Marked.
