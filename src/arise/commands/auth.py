@@ -2,7 +2,7 @@
 # coding:utf-8
 # Copyright (C) 2024 All rights reserved.
 # FILENAME:    ~~/src/arise/commands/auth.py
-# VERSION:     0.2.2
+# VERSION:     0.2.3
 # CREATED:     2024-01-01 01:48
 # AUTHOR:      Sitt Guruvanich <aekasitt.g+github@siamintech.co.th>
 # DESCRIPTION:
