@@ -79,6 +79,7 @@ target-version = 'py38'
 [tool.uv]
 dev-dependencies = [
   'mypy >=1.7.1',
+  'pdoc >=14.7.0',
   'pytest >=7.4.3',
   'ruff >=0.2.2',
   'types-pyyaml >=6.0.12.12',
