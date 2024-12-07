@@ -57,6 +57,10 @@ version = '0.2.3'
 arise = 'arise.core:cli'
 
 
+[tool.hatch.build]
+exclude = [ '/docs', '/static', '/tests' ]
+
+
 [tool.mypy]
 disallow_incomplete_defs = true
 disallow_untyped_calls = true
