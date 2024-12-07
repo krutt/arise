@@ -7,7 +7,7 @@ jobs:
         with:
           python-version: '3.13'
       - run: curl -LsSf https://astral.sh/uv/install.sh | sh
-      - run: export PATH="/root/.local/bin/:$PATH"
+      - run: export PATH="/home/runner/.local/bin/:$PATH"
       - run: export UV_LINK_MODE=copy
       - run: uv sync --dev --python-preference system
       - run: source .venv/bin/activate
