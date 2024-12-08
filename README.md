@@ -175,7 +175,7 @@ standard `arise` command which brings up a help menu.
 * **0.1.4** Experiment with c compilers for faster build-times
 * **0.1.5** Add peripheral images `arise-elctrs`, `arise-mempoopl` and `arise-mutiny-wallet`
 * **0.1.6** Pretend launching electrs on `testnet4` is easy by using custom `electrs` repository
-* **0.1.7** Separate middleware deployment and add delay for `postgres` setup time
+* **0.1.7** Separate middleware deployment and add delay for `mariadb` setup time
 * **0.1.8** Experiment with cookie authentications between peripheral images
 * **0.1.9** Enable intranet between containers and authenticate using cookie
 * **0.2.0** Attribute animation tutoral and typeface in README markdown
