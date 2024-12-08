@@ -11,8 +11,8 @@
 # *************************************************************
 
 ### Local modules ###
-from arise.commands import build, clean, deploy, dashboard
+from arise.commands import auth, build, clean, deploy, dashboard, pull
 
-__all__ = ("build", "clean", "dashboard", "deploy")
+__all__ = ("auth", "build", "clean", "dashboard", "deploy", "pull")
 
 __version__ = "0.2.3"
