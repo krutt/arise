@@ -15,7 +15,7 @@ jobs:
       - name: Load development dependencies
         run: uv sync --dev
       - name: Generate documentation
-        run: uv run pdoc src/arise/commands/*.py --logo soldaat.svg --output docs
+        run: uv run pdoc src/arise/commands/*.py --logo arise/soldaat.svg --output docs
       - name: Copy public domain art from static directory to docs
         run: cp static/soldaat.svg docs/soldaat.svg
       - uses: actions/upload-pages-artifact@v3
