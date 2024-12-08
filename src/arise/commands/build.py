@@ -15,7 +15,7 @@ from io import BytesIO
 from typing import Dict, List, Set
 
 ### Third-party packages ###
-from click import command, option
+from click import option
 from docker import DockerClient, from_env
 from docker.errors import BuildError, DockerException
 from rich import print as rich_print
@@ -26,7 +26,6 @@ from arise.shadows import Igris
 from arise.types import Build
 
 
-@command
 @option("--electrs", is_flag=True, help="Build arise-electrs image", type=bool)
 @option("--mainnet", is_flag=True, help="Build arise-mainnet image", type=bool)
 @option("--mariadb", is_flag=True, help="Build arise-mariadb image", type=bool)
@@ -43,7 +42,18 @@ def build(
   signet: bool,
   testnet: bool,
 ) -> None:
-  """Build peripheral images for the desired cluster."""
+  """
+  Build peripheral images for the desired cluster.
+
+  Options:
+    * electrs (bool) if present, builds `arise-electrs` with bitcoin electrum server written in rustlang
+    * mainnet (bool) if present, builds `arise-mainnet` image with bitcoin network daemon configured to `mainnet`
+    * mariadb (bool) if present, builds `arise-mariadb` image with database service
+    * mempool (bool) if present, builds `arise-mempool` image with mempool backend service
+    * mutiny-web (bool) if present, builds `arise-mutiny-web` image with MutinyWallet web application
+    * signet (bool) if present, builds `arise-signet` image with bitcoin network daemon configured to `signet`
+    * testnet (bool) if present, builds `arise-testnet` image with bitcoin network daemon configured to `testnet`
+  """
   client: DockerClient
   try:
     client = from_env()

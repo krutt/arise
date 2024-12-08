@@ -16,13 +16,12 @@ from re import findall
 from typing import Dict, List, Optional, Tuple
 
 ### Third-party packages ###
-from click import argument, command, option
+from click import argument, option
 from docker import DockerClient, from_env
 from docker.errors import DockerException
 from rich import print as rich_print
 
 
-@command
 @argument("rpcuser", required=False)
 @argument("dbuser", required=False)
 @argument("dbpass", required=False)
@@ -31,7 +30,18 @@ from rich import print as rich_print
 def auth(
   bash: bool, dbpass: Optional[str], dbuser: Optional[str], rpcuser: Optional[str], zsh: bool
 ) -> None:
-  """Persist authentications in desired run-control file."""
+  """
+  Persist authentications in desired run-control file.
+
+  Positional arguments:
+    * rpcuser (optional, str)
+    * dbuser (optional, str)
+    * dbpass (optional, str)
+
+  Options:
+    * bash (bool) if present, targets the run-control file belonging to bash shell.
+    * zsh (bool) if present, targets the run-control file belonging to zsh shell.
+  """
   client: DockerClient
   try:
     client = from_env()

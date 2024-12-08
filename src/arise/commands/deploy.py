@@ -15,7 +15,7 @@ from time import sleep
 from typing import Dict, List, Tuple
 
 ### Third-party packages ###
-from click import command, option
+from click import option
 from docker import DockerClient, from_env
 from docker.errors import APIError, DockerException
 from rich import print as rich_print
@@ -26,7 +26,6 @@ from arise.configs import NETWORK, SERVICES
 from arise.types import Chain, Service, ServiceName
 
 
-@command
 @option("--mainnet", cls=Chain, is_flag=True, type=bool, variants=("signet", "testnet"))
 @option("--signet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "testnet"))
 @option("--testnet", cls=Chain, is_flag=True, type=bool, variants=("mainnet", "signet"))
@@ -41,7 +40,17 @@ def deploy(
   with_mempool: bool,
   with_mutiny_web: bool,
 ) -> None:
-  """Deploy cluster."""
+  """
+  Deploy cluster with bitcoin network daemon and peripherals.
+
+  Options:
+    * --mainnet (bool) if present, deploys a bitcoin daemon configured to 'mainnet' p2p network.
+    * --signet (bool) if present, deploys a bitcoin daemon configured to 'signet' p2p network.
+    * --testnet (bool) if present, deploys a bitcoin daemon configured to 'testnet3' p2p network.
+    * --with-electrs (bool) if present, deploys a peripheral electrum server as well as mariadb middleware.
+    * --with-mempool (bool) if present, deploys a peripheral mempool backend server.
+    * --with-mutiny-web (bool) if present, deploys a peripheral mutiny-web web application.
+  """
   client: DockerClient
   try:
     client = from_env()

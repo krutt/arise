@@ -15,7 +15,6 @@ from re import match
 from typing import List
 
 ### Third-party packages ###
-from click import command
 from docker import DockerClient, from_env
 from docker.errors import DockerException
 from docker.models.containers import Container
@@ -25,7 +24,6 @@ from rich import print as rich_print
 from arise.shadows import Bellion
 
 
-@command
 def dashboard() -> None:
   """Dashboard for checking current state of images deployed."""
   client: DockerClient

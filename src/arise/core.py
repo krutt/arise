@@ -11,7 +11,7 @@
 # *************************************************************
 
 ### Third-party packages ###
-from click import group
+from click import command, group
 
 ### Local modules ###
 from arise.commands import auth, build, clean, dashboard, deploy, pull
@@ -22,12 +22,12 @@ def cli() -> None:
   """arise"""
 
 
-cli.add_command(auth, "auth")
-cli.add_command(build, "build")
-cli.add_command(clean, "clean")
-cli.add_command(dashboard, "dashboard")
-cli.add_command(deploy, "deploy")
-cli.add_command(pull, "pull")
+cli.add_command(command(auth), "auth")
+cli.add_command(command(build), "build")
+cli.add_command(command(clean), "clean")
+cli.add_command(command(dashboard), "dashboard")
+cli.add_command(command(deploy), "deploy")
+cli.add_command(command(pull), "pull")
 
 
 if __name__ == "__main__":

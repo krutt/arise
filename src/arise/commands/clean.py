@@ -15,7 +15,7 @@ from re import match
 from typing import List
 
 ### Third-party packages ###
-from click import command, option
+from click import option
 from docker import DockerClient, from_env
 from docker.errors import DockerException, NotFound
 from docker.models.containers import Container
@@ -27,10 +27,14 @@ from rich.progress import track
 from arise.configs import NETWORK
 
 
-@command
 @option("--inactive", help="Query inactive containers for removal.", is_flag=True, type=bool)
 def clean(inactive: bool) -> None:
-  """Remove all active "arise-*" containers, drop network."""
+  """
+  Remove containers with baring "arise-" prefix, drop network.
+
+  Options:
+    * --inactive (bool) if present, targets both active and inactive or stopped containers.
+  """
   client: DockerClient
   try:
     client = from_env()
@@ -43,7 +47,7 @@ def clean(inactive: bool) -> None:
   outputs: List[str] = []
   containers: List[Container] = client.containers.list(all=inactive)
   for container in track(containers, f"Clean {('active','all')[inactive]} containers:".ljust(42)):
-    if match(r"arise-*", container.name) is not None:
+    if match(r"^arise-*", container.name) is not None:
       container.stop()
       container.remove(v=True)  # if `v` is true, remove associated volume
       outputs.append(f"<Container '{ container.name }'> removed.")
