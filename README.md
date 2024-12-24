@@ -79,7 +79,7 @@ arise dashboard
 
 ### Prerequisites
 
-* [python](https://www.python.org) version 3.8 and above
+* [python](https://www.python.org) version 3.9 and above
 * [uv](https://docs.astral.sh/uv)
 * [docker](https://www.docker.com)
 
