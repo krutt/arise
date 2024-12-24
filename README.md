@@ -125,7 +125,7 @@ If you do not have `uv` installed, run the following command.
 
 
 Once you have `pyenv` Python version manager installed, you can
-install any version of Python above version 3.8 for this project.
+install any version of Python above version 3.9 for this project.
 The following commands help you set up and activate a Python virtual
 environment where `uv` can download project dependencies from the `PyPI`
 open-sourced registry defined under `pyproject.toml` file.
