@@ -10,9 +10,13 @@
 # HISTORY:
 # *************************************************************
 
+### Standard packages ###
+from typing import Tuple
+
 ### Local modules ###
 from arise.commands import auth, build, clean, deploy, dashboard, pull
 
-__all__ = ("auth", "build", "clean", "dashboard", "deploy", "pull")
-
-__version__ = "0.2.3"
+__all__: Tuple[str, ...] = ("auth", "build", "clean", "dashboard", "deploy", "pull")
+__name__: str = "arise"
+__package__: str = "arise"
+__version__: str = "0.2.3"
