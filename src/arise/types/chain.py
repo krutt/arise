@@ -19,7 +19,7 @@ from click import Context, Option, UsageError
 
 class Chain(Option):
   def __init__(self, *args: Any, **kwargs: Any) -> None:
-    self.variants: list = kwargs.pop("variants")
+    self.variants: List[str] = kwargs.pop("variants")
     assert self.variants, "'variants' parameter required."
     kwargs["help"] = (
       kwargs.get("help", "") + f"Option is mutually exclusive with {', '.join(self.variants)}."
@@ -41,4 +41,4 @@ class Chain(Option):
     return super(Chain, self).handle_parse_result(ctx, opts, args)
 
 
-__all__ = ("Chain",)
+__all__: Tuple[str, ...] = ("Chain",)

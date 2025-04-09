@@ -13,7 +13,7 @@
 ### Standard packages ###
 from math import floor
 from random import choice, random
-from typing import ClassVar, List, Literal, get_args
+from typing import ClassVar, List, Literal, Tuple, get_args
 
 ### Third-party packages ###
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -123,4 +123,4 @@ class Tusk(BaseModel):
       self.pixels[i] = fire_chars[floor(average_value)]
 
 
-__all__ = ("Tusk",)
+__all__: Tuple[str, ...] = ("Tusk",)

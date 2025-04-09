@@ -14,12 +14,12 @@
 from collections import deque
 from math import floor
 from re import search
-from typing import Any, Deque, Generator, Optional, Union
+from typing import Any, Deque, Generator, Optional, Tuple, Union
 
 ### Third-party packages ###
 from rich.box import MINIMAL
 from rich.console import ConsoleRenderable, Group, RichCast
-from rich.progress import BarColumn, Progress, Task
+from rich.progress import BarColumn, Progress, Task, TaskID
 from rich.table import Table
 
 
@@ -63,7 +63,7 @@ class Igris(Progress):
         if step is not None:
           divided: int = int(step.group("divided"))
           divisor: int = int(step.group("divisor"))
-          self.update(task_id, completed=floor(divided / divisor * 100))
+          self.update(TaskID(task_id), completed=floor(divided / divisor * 100))
         self.update_table(stream)
       elif "error" in line:
         self.update_table(line.pop("error").strip())
@@ -77,4 +77,4 @@ class Igris(Progress):
     self.table = table
 
 
-__all__ = ("Igris",)
+__all__: Tuple[str, ...] = ("Igris",)

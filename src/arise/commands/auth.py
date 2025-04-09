@@ -82,4 +82,4 @@ def auth(
   list(map(rich_print, outputs))
 
 
-__all__ = ("auth",)
+__all__: Tuple[str, ...] = ("auth",)

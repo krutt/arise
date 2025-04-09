@@ -159,4 +159,4 @@ def deploy(
     )
 
 
-__all__ = ("deploy",)
+__all__: Tuple[str, ...] = ("deploy",)

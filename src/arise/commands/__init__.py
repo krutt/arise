@@ -10,6 +10,9 @@
 # HISTORY:
 # *************************************************************
 
+### Standard packages ###
+from typing import Tuple
+
 ### Local modules ###
 from arise.commands.auth import auth
 from arise.commands.build import build
@@ -18,4 +21,4 @@ from arise.commands.dashboard import dashboard
 from arise.commands.deploy import deploy
 from arise.commands.pull import pull
 
-__all__ = ("auth", "build", "clean", "dashboard", "deploy", "pull")
+__all__: Tuple[str, ...] = ("auth", "build", "clean", "dashboard", "deploy", "pull")
