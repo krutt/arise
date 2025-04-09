@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.9
+#!/usr/bin/env python3.8
 # coding:utf-8
 # Copyright (C) 2024 All rights reserved.
 # FILENAME:    ~~/src/arise/types/service.py
@@ -11,7 +11,7 @@
 # *************************************************************
 
 ### Standard packages ###
-from typing import Dict, List, Literal
+from typing import Dict, List, Literal, Tuple
 from typing_extensions import Annotated
 
 ### Third-party packages ###
@@ -39,4 +39,4 @@ ServiceName = Literal[
   "arise-testnet",
 ]
 
-__all__ = ("PortMapping", "Service", "ServiceName")
+__all__: Tuple[str, ...] = ("PortMapping", "Service", "ServiceName")

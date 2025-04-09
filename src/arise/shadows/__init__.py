@@ -10,9 +10,12 @@
 # HISTORY:
 # *************************************************************
 
+### Standard packages ###
+from typing import Tuple
+
 ### Local modules ###
 from arise.shadows.bellion import Bellion
 from arise.shadows.igris import Igris
 from arise.shadows.tusk import Tusk
 
-__all__ = ("Bellion", "Igris", "Tusk")
+__all__: Tuple[str, ...] = ("Bellion", "Igris", "Tusk")

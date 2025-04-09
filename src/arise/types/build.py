@@ -11,7 +11,7 @@
 # *************************************************************
 
 ### Standard packages ###
-from typing import Dict, Literal
+from typing import Dict, Literal, Tuple
 
 from pydantic import BaseModel, StrictStr
 
@@ -33,4 +33,4 @@ BuildEnum = Literal[
 ]
 
 
-__all__ = ("Build", "BuildEnum")
+__all__: Tuple[str, ...] = ("Build", "BuildEnum")

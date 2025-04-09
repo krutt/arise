@@ -10,6 +10,9 @@
 # HISTORY:
 # *************************************************************
 
+### Standard packages ###
+from typing import Tuple
+
 ### Third-party packages ###
 from pydantic import BaseModel, Field, StrictFloat, StrictInt
 
@@ -26,4 +29,4 @@ class DifficultyAdjustment(BaseModel):
   time_offset: StrictInt = Field(alias="timeOffset")
 
 
-__all__ = ("DifficultyAdjustment",)
+__all__: Tuple[str, ...] = ("DifficultyAdjustment",)

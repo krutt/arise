@@ -12,7 +12,7 @@
 
 ### Standard packages ###
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
 
 ### Standard packages ###
 from pydantic import TypeAdapter
@@ -34,4 +34,4 @@ with open(str(file_path).replace("configs.py", "schemas.yml"), "rb") as stream:
     NETWORK = schema.get("network", "arise")
     SERVICES = TypeAdapter(Dict[ServiceName, Service]).validate_python(schema["services"])
 
-__all__ = ("BUILDS", "NETWORK", "SERVICES")
+__all__: Tuple[str, ...] = ("BUILDS", "NETWORK", "SERVICES")
