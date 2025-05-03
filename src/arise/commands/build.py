@@ -98,7 +98,7 @@ def build(
         build_task_id: int = igris.add_task(tag, progress_type="build", total=100)
         with BytesIO("\n".join(build.instructions.values()).encode("utf-8")) as fileobj:
           try:
-            igris.progress_build(  # type: ignore[misc]
+            igris.progress_build(
               client.api.build(
                 decode=True, fileobj=fileobj, gzip=True, platform=build.platform, rm=True, tag=tag
               ),
@@ -106,6 +106,7 @@ def build(
             )
           except BuildError:
             igris.update(build_task_id, completed=0)
+            continue
           igris.update(build_task_id, completed=100)
           igris.update(task_id, advance=1)
       igris.update(task_id, completed=build_count, description="[blue]Complete[reset]")
